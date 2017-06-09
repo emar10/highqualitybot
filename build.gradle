@@ -1,0 +1,27 @@
+plugins {
+    id'java'
+    id'application'
+    id'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
+group 'com.robothand'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+mainClassName = 'com.robothand.highqualitybot.Bot'
+
+version '1.0'
+def jdaVersion = '3.1.1_212'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "net.dv8tion:JDA:$jdaVersion"
+}
+
+compileJava.options.encoding = 'UTF-8'
