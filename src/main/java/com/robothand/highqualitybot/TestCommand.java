@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
- * Created by ethan on 6/9/17.
+ * basic test commands
  */
 public class TestCommand extends ListenerAdapter {
 
@@ -24,7 +24,7 @@ public class TestCommand extends ListenerAdapter {
                 break;
 
             case ".killswitch":
-                channel.sendMessage("Going down!").queue();
+                channel.sendMessage("Going down!").complete();
                 Bot.shutdown();
                 break;
 

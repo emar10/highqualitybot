@@ -21,17 +21,10 @@ public class Bot {
         }
 
         api.addEventListener(new TestCommand());
-        running = true;
-
-        while (running) {
-
-        }
-
-        System.exit(0);
     }
 
     public static void shutdown() {
-        System.exit(0);
+        api.shutdown();
     }
 
 }
