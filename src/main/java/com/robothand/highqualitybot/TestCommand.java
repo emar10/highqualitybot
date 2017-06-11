@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot;
 
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -19,8 +20,8 @@ public class TestCommand extends ListenerAdapter {
         MessageChannel channel = message.getChannel();
 
         switch (content) {
-            case ".ping":
-                channel.sendMessage("Pong!").queue();
+            case ".ayy":
+                channel.sendMessage(new MessageBuilder().append("ayy lamo").setTTS(true).build()).queue();
                 break;
 
             case ".killswitch":
