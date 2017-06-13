@@ -23,7 +23,9 @@ public class TestCommand extends ListenerAdapter {
             case ".ayy":
                 channel.sendMessage(new MessageBuilder().append("ayy lamo").setTTS(true).build()).queue();
                 break;
-
+            case ".heave":
+                   channel.sendMessage(new MessageBuilder().append("ho").setTTS(true).build()).queue();
+                    break;
             case ".killswitch":
                 channel.sendMessage("Going down!").complete();
                 Bot.shutdown();
