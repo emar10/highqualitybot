@@ -43,6 +43,7 @@ public class Bot {
         }
 
         api.addEventListener(new TestCommand());
+        api.addEventListener(new TestAudioControl());
     }
 
     public static void shutdown() {
