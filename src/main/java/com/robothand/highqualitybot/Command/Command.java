@@ -2,7 +2,6 @@ package com.robothand.highqualitybot.Command;
 
 import com.robothand.highqualitybot.Bot;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -10,22 +9,30 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  * Created by ethan on 6/17/17.
  */
 public abstract class Command extends ListenerAdapter {
-    Message message;
-    String content;
-    MessageChannel channel;
 
-    public abstract void onCommand(MessageReceivedEvent event);
+    public abstract String[] getNames();
+    public abstract String getDescription();
+    public abstract String getShortDesc();
+    public abstract void onCommand(MessageReceivedEvent event, String[] args);
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         // grab basic info from event
-        message = event.getMessage();
-        content = message.getRawContent();
-        channel = message.getChannel();
+        Message message = event.getMessage();
+        String content = message.getRawContent();
 
         // check for command prefix
-        if (content.startsWith(Bot.PREFIX)) {
-            onCommand(event);
+        if (!content.startsWith(Bot.PREFIX)) {
+            // strip it off and split it
+            String[] args = content.replaceFirst(Bot.PREFIX, "").split(" ");
+
+            // check with names
+            for (String current : getNames()) {
+                if (args[0].equals(current)) {
+                    onCommand(event, args); // run command if we find the name
+                    break;
+                }
+            }
         }
     }
 }
