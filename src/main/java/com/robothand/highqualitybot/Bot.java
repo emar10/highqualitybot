@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot;
 
+import com.robothand.highqualitybot.Command.ManagementCommand;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -13,7 +14,7 @@ import java.util.Scanner;
  */
 public class Bot {
     static JDA api;
-    static boolean running;
+    public static String PREFIX;
 
     public static void main(String[] args) {
         File config;
@@ -29,6 +30,9 @@ public class Bot {
             // token
             token = s.nextLine();
 
+            // prefix
+            PREFIX = s.nextLine();
+
         } catch (FileNotFoundException e) {
             System.err.println("FATAL: could not find file \"config.txt\"");
             System.exit(1);
@@ -42,12 +46,12 @@ public class Bot {
             System.exit(1);
         }
 
-        api.addEventListener(new TestCommand());
+        api.addEventListener(new ManagementCommand());
         api.addEventListener(new TestAudioControl());
     }
 
-    public static void shutdown() {
-        api.shutdown();
+    public static JDA getAPI() {
+        return api;
     }
-
 }
+

@@ -28,7 +28,7 @@ public class TestCommand extends ListenerAdapter {
                     break;
             case ".killswitch":
                 channel.sendMessage("Going down!").complete();
-                Bot.shutdown();
+                Bot.getAPI().shutdown();
                 break;
 
             default:
