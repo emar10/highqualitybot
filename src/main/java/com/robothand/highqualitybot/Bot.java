@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot;
 
-import com.robothand.highqualitybot.Command.ManagementCommand;
+import com.robothand.highqualitybot.Command.PingCommand;
+import com.robothand.highqualitybot.Command.ShutdownCommand;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -46,7 +47,8 @@ public class Bot {
             System.exit(1);
         }
 
-        api.addEventListener(new ManagementCommand());
+        api.addEventListener(new ShutdownCommand());
+        api.addEventListener(new PingCommand());
         api.addEventListener(new TestAudioControl());
     }
 

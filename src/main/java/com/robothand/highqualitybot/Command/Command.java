@@ -22,7 +22,7 @@ public abstract class Command extends ListenerAdapter {
         String content = message.getRawContent();
 
         // check for command prefix
-        if (!content.startsWith(Bot.PREFIX)) {
+        if (content.startsWith(Bot.PREFIX)) {
             // strip it off and split it
             String[] args = content.replaceFirst(Bot.PREFIX, "").split(" ");
 
