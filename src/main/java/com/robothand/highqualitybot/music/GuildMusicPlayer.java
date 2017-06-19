@@ -11,6 +11,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 
 import java.util.Hashtable;
@@ -65,27 +66,42 @@ public class GuildMusicPlayer {
         return player.isPaused();
     }
 
-    public String playTrack(String search) {
-        return playTrack(search, false);
+    public void playTrack(String search) {
+        playTrack(search, null);
     }
 
-    public String playTrack(String search, boolean quiet) {
-        String message = null;
+    public void playTrack(String search, MessageChannel channel) {
 
-        playerManager.loadItem(search, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(player, search, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
+                scheduler.add(track);
 
+                if (channel != null) {
+                    String message = "Added \"" + track.getInfo().title + "\" to the queue.";
+                    channel.sendMessage(message).queue();
+                }
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
+                for (AudioTrack track : playlist.getTracks()) {
+                    scheduler.add(track);
+                }
 
+                if (channel != null) {
+                    String message = "Added " + playlist.getTracks().size() + " tracks from \"" + playlist.getName()
+                                   + "\" to the queue.";
+                    channel.sendMessage(message).queue();
+                }
             }
 
             @Override
             public void noMatches() {
-
+                if (channel != null) {
+                    String message = "Could not find any matches for \"" + search + "\"";
+                    channel.sendMessage(message);
+                }
             }
 
             @Override
@@ -93,7 +109,5 @@ public class GuildMusicPlayer {
 
             }
         });
-
-        return message;
     }
 }

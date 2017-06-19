@@ -26,7 +26,6 @@ public class TrackScheduler extends AudioEventAdapter {
         queue = new LinkedList<>();
     }
 
-    // TODO implement scheduler methods
     public void add(AudioTrack track) {
         if (!player.startTrack(track, true)) {
             queue.offer(track);
