@@ -22,6 +22,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private AudioTrack prevTrack;
 
     public TrackScheduler(AudioPlayer player) {
+        repeating = Repeat.OFF;
         this.player = player;
         queue = new LinkedList<>();
     }

@@ -1,7 +1,9 @@
 package com.robothand.highqualitybot;
 
 import com.robothand.highqualitybot.command.PingCommand;
+import com.robothand.highqualitybot.command.PlayCommand;
 import com.robothand.highqualitybot.command.ShutdownCommand;
+import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -47,9 +49,15 @@ public class Bot {
             System.exit(1);
         }
 
+        // prepare the audio sources
+        GuildMusicPlayer.setupSources();
+
+        // utility commands
         api.addEventListener(new ShutdownCommand());
         api.addEventListener(new PingCommand());
-        api.addEventListener(new TestAudioControl());
+
+        // music
+        api.addEventListener(new PlayCommand());
     }
 
     public static JDA getAPI() {

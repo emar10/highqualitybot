@@ -22,13 +22,13 @@ import java.util.Hashtable;
 public class GuildMusicPlayer {
 
     private static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-    private static Hashtable<String, GuildMusicPlayer> guilds;
+    private static final Hashtable<String, GuildMusicPlayer> guilds = new Hashtable<>();
     private final AudioPlayer player;
     private final AudioPlayerSendHandler handler;
     private final TrackScheduler scheduler;
     private final Guild guild;
 
-    static void setupSources() {
+    public static void setupSources() {
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
         playerManager.registerSourceManager(new SoundCloudAudioSourceManager());
         playerManager.registerSourceManager(new LocalAudioSourceManager());
@@ -38,8 +38,14 @@ public class GuildMusicPlayer {
         guilds.put(guildID, gmp);
     }
 
-    public static GuildMusicPlayer getPlayer(String guildID) {
-        return guilds.get(guildID);
+    public static GuildMusicPlayer getPlayer(Guild guild) {
+        // check to see if a player already exists
+        GuildMusicPlayer musicPlayer = guilds.get(guild.getId());
+        if (musicPlayer == null) {
+            musicPlayer = new GuildMusicPlayer(guild);
+        }
+
+        return musicPlayer;
     }
 
     public GuildMusicPlayer(Guild guild) {
@@ -60,6 +66,14 @@ public class GuildMusicPlayer {
     public void leaveChannel() {
         guild.getAudioManager().setSendingHandler(null);
         guild.getAudioManager().closeAudioConnection();
+    }
+
+    public boolean isInChannel() {
+        if (guild.getAudioManager().getSendingHandler() == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean isPaused() {
@@ -106,7 +120,9 @@ public class GuildMusicPlayer {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-
+                if (channel != null) {
+                    channel.sendMessage("Could not play").queue();
+                }
             }
         });
     }
