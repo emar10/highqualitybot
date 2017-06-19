@@ -58,6 +58,8 @@ public class Bot {
         api.addEventListener(new PlayCommand());
         api.addEventListener(new PauseCommand());
         api.addEventListener(new SkipCommand());
+        api.addEventListener(new RepeatCommand());
+        api.addEventListener(new QueueCommand());
     }
 
     public static JDA getAPI() {

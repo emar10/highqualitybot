@@ -15,6 +15,7 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 
 import java.util.Hashtable;
+import java.util.Queue;
 
 /**
  * Created by ethan on 6/18/17.
@@ -86,6 +87,18 @@ public class GuildMusicPlayer {
 
     public void skipTrack() {
         scheduler.nextTrack();
+    }
+
+    public TrackScheduler.Repeat getRepeat() {
+        return scheduler.getRepeat();
+    }
+
+    public void setRepeat(TrackScheduler.Repeat repeat) {
+        scheduler.setRepeat(repeat);
+    }
+
+    public Queue<AudioTrack> getQueue() {
+        return scheduler.getQueue();
     }
 
     public void playTrack(String search) {

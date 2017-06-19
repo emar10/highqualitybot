@@ -33,6 +33,10 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
 
+    public Queue<AudioTrack> getQueue() {
+        return queue;
+    }
+
     public void nextTrack() {
         nextTrack(false);
     }
@@ -41,21 +45,16 @@ public class TrackScheduler extends AudioEventAdapter {
         if (repeating == Repeat.OFF || forceNext) {
             player.startTrack(queue.poll(), false);
         } else if (repeating == Repeat.SINGLE) {
-            player.startTrack(prevTrack.makeClone(), false);
+            player.startTrack(player.getPlayingTrack().makeClone(), false);
         } else if (repeating == Repeat.ALL) {
-            if (prevTrack == null) {
-                prevTrack = player.getPlayingTrack();
-            }
-
+            queue.add(player.getPlayingTrack());
             player.startTrack(queue.poll(), false);
-            queue.add(prevTrack);
-            prevTrack = null;
         }
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason reason) {
-        if (prevTrack != null) {
+        if (reason.mayStartNext) {
             prevTrack = track;
             nextTrack();
         }
