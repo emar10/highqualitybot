@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot;
 
+import com.robothand.highqualitybot.command.PauseCommand;
 import com.robothand.highqualitybot.command.PingCommand;
 import com.robothand.highqualitybot.command.PlayCommand;
 import com.robothand.highqualitybot.command.ShutdownCommand;
@@ -58,6 +59,7 @@ public class Bot {
 
         // music
         api.addEventListener(new PlayCommand());
+        api.addEventListener(new PauseCommand());
     }
 
     public static JDA getAPI() {

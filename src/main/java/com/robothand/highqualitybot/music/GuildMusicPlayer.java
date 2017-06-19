@@ -80,6 +80,10 @@ public class GuildMusicPlayer {
         return player.isPaused();
     }
 
+    public void setPaused(boolean value) {
+        player.setPaused(value);
+    }
+
     public void playTrack(String search) {
         playTrack(search, null);
     }
