@@ -55,8 +55,10 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason reason) {
-        prevTrack = track;
-        nextTrack();
+        if (prevTrack != null) {
+            prevTrack = track;
+            nextTrack();
+        }
     }
 
     public Repeat getRepeat() {

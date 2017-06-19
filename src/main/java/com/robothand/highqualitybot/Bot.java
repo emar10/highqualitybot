@@ -1,9 +1,6 @@
 package com.robothand.highqualitybot;
 
-import com.robothand.highqualitybot.command.PauseCommand;
-import com.robothand.highqualitybot.command.PingCommand;
-import com.robothand.highqualitybot.command.PlayCommand;
-import com.robothand.highqualitybot.command.ShutdownCommand;
+import com.robothand.highqualitybot.command.*;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -60,6 +57,7 @@ public class Bot {
         // music
         api.addEventListener(new PlayCommand());
         api.addEventListener(new PauseCommand());
+        api.addEventListener(new SkipCommand());
     }
 
     public static JDA getAPI() {

@@ -84,6 +84,10 @@ public class GuildMusicPlayer {
         player.setPaused(value);
     }
 
+    public void skipTrack() {
+        scheduler.nextTrack();
+    }
+
     public void playTrack(String search) {
         playTrack(search, null);
     }
