@@ -101,6 +101,10 @@ public class GuildMusicPlayer {
         return scheduler.getQueue();
     }
 
+    public AudioTrack getPlayingTrack() {
+        return player.getPlayingTrack();
+    }
+
     public void playTrack(String search) {
         playTrack(search, null);
     }

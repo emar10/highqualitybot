@@ -57,6 +57,7 @@ public class Bot {
         // music
         api.addEventListener(new PlayCommand());
         api.addEventListener(new PauseCommand());
+        api.addEventListener(new NowPlayingCommand());
         api.addEventListener(new SkipCommand());
         api.addEventListener(new RepeatCommand());
         api.addEventListener(new QueueCommand());
