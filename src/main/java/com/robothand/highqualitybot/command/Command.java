@@ -1,4 +1,4 @@
-package com.robothand.highqualitybot.Command;
+package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
 import net.dv8tion.jda.core.entities.Message;

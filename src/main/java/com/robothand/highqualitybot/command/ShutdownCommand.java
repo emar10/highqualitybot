@@ -1,19 +1,20 @@
-package com.robothand.highqualitybot.Command;
+package com.robothand.highqualitybot.command;
 
+import com.robothand.highqualitybot.Bot;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
  * Created by ethan on 6/18/17.
  */
-public class PingCommand extends Command {
+public class ShutdownCommand extends Command {
 
     @Override
     public String[] getNames() {
-        return new String[] {"ping"};
+        return new String[] {"shutdown", "killswitch"};
     }
 
-    // TODO add descriptions for command
+    // TODO add description
     @Override
     public String getDescription() {
         return null;
@@ -28,6 +29,7 @@ public class PingCommand extends Command {
     public void onCommand(MessageReceivedEvent event, String[] args) {
         MessageChannel channel = event.getChannel();
 
-        channel.sendMessage("Pong!").queue();
+        channel.sendMessage("Going down!").complete();
+        Bot.getAPI().shutdown();
     }
 }
