@@ -13,12 +13,13 @@ public class HelpCommand extends Command {
 
     @Override
     public String[] getNames() {
-        return new String[] {"help", "commands"};
+        return new String[] {"help", "commands", "h"};
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "Lists all available commands. Provide the name of another command to get more information as well as" +
+                "usage.\nUsage: help [command]";
     }
 
     @Override
@@ -50,6 +51,37 @@ public class HelpCommand extends Command {
 
                 message.append("**").append(names[0]).append("** - ");
                 message.append((shortDesc != null) ? shortDesc : "Short description not available.").append("\n");
+            }
+
+            channel.sendMessage(message.toString()).queue();
+        } else {
+            StringBuilder message = new StringBuilder();
+            Command command = commands.get(args[1]);
+
+            if (command == null) {
+                message.append("Command \"**").append(args[1]).append("**\" is unknown.");
+            } else {
+                String[] names = command.getNames();
+                String description = command.getDescription();
+
+                message.append("**");
+                int index = 0;
+                for (String alias : command.getNames()) {
+                    if (index == 0) {
+                        message.append(alias);
+                        if (names.length != 1) {
+                            message.append(" (");
+                        }
+                    } else if (index == names.length - 1) {
+                        message.append(alias).append(") ");
+                    } else {
+                        message.append(alias).append(", ");
+                    }
+
+                    index++;
+                }
+                message.append("**: ");
+                message.append((description != null) ? description : "Description not available.");
             }
 
             channel.sendMessage(message.toString()).queue();
