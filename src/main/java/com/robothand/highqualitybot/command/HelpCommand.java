@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot.command;
 
+import com.robothand.highqualitybot.Bot;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -19,7 +20,8 @@ public class HelpCommand extends Command {
     @Override
     public String getDescription() {
         return "Lists all available commands. Provide the name of another command to get more information as well as" +
-                "usage.\nUsage: help [command]";
+                "usage.\n" +
+                "Usage: " + Bot.PREFIX + "help [command]";
     }
 
     @Override

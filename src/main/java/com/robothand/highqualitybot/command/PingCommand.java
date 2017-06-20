@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot.command;
 
+import com.robothand.highqualitybot.Bot;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -16,7 +17,8 @@ public class PingCommand extends Command {
     // TODO add descriptions for command
     @Override
     public String getDescription() {
-        return null;
+        return "Used to test that the bot is working. Though if you're reading this, it's probably working.\n" +
+                "Usage: " + Bot.PREFIX + "ping";
     }
 
     @Override

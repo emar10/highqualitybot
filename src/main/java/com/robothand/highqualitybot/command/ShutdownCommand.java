@@ -17,7 +17,9 @@ public class ShutdownCommand extends Command {
     // TODO add description
     @Override
     public String getDescription() {
-        return null;
+        return "Immediately shuts down the bot. If you don't have the ability to start it up again, you probably " +
+                "shouldn't use this.\n" +
+                "Usage: " + Bot.PREFIX + "shutdown";
     }
 
     @Override
