@@ -50,17 +50,22 @@ public class Bot {
         // prepare the audio sources
         GuildMusicPlayer.setupSources();
 
+        // help command
+        HelpCommand help = new HelpCommand();
+        api.addEventListener(help.addCommand(help));
+
         // utility commands
-        api.addEventListener(new ShutdownCommand());
-        api.addEventListener(new PingCommand());
+        api.addEventListener(help.addCommand(new ShutdownCommand()));
+        api.addEventListener(help.addCommand(new PingCommand()));
 
         // music
-        api.addEventListener(new PlayCommand());
-        api.addEventListener(new PauseCommand());
-        api.addEventListener(new NowPlayingCommand());
-        api.addEventListener(new SkipCommand());
-        api.addEventListener(new RepeatCommand());
-        api.addEventListener(new QueueCommand());
+        api.addEventListener(help.addCommand(new PlayCommand()));
+        api.addEventListener(help.addCommand(new PauseCommand()));
+        api.addEventListener(help.addCommand(new NowPlayingCommand()));
+        api.addEventListener(help.addCommand(new SkipCommand()));
+        api.addEventListener(help.addCommand(new RepeatCommand()));
+        api.addEventListener(help.addCommand(new QueueCommand()));
+
     }
 
     public static JDA getAPI() {

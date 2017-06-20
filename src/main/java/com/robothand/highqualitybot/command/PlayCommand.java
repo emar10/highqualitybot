@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot.command;
 
+import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -17,12 +18,14 @@ public class PlayCommand extends Command {
 
     @Override
     public String getDescription() {
-        return null;
+        return "With no arguments, resumes playback if the player is paused. Providing a valid audio source (YouTube" +
+                "link, SoundCloud, etc.) as an argument will add it to the queue.\n" +
+                "Usage: " + Bot.PREFIX + "play [link]";
     }
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Resume the player, or provide a link to add a song to the queue!";
     }
 
     @Override

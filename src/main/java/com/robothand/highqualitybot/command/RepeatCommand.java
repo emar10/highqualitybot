@@ -18,12 +18,14 @@ public class RepeatCommand extends Command {
 
     @Override
     public String getDescription() {
-        return null;
+        return "With no arguments, shows the repeat mode. OFF disables repeating, SINGLE will repeat the current song" +
+                "until manually skipped, and ALL will repeat the entire playlist indefinitely.\n" +
+                "Usage: " + Bot.PREFIX + "repeat [off, single all]";
     }
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Show or change the repeat mode for the queue.";
     }
 
     @Override

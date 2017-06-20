@@ -1,5 +1,6 @@
 package com.robothand.highqualitybot.command;
 
+import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -16,12 +17,13 @@ public class NowPlayingCommand extends Command {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Lists info on the song currently playing.\n" +
+                "Usage: " + Bot.PREFIX + "nowplaying";
     }
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Show the song currently playing.";
     }
 
     @Override
