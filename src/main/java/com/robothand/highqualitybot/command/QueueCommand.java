@@ -24,7 +24,7 @@ public class QueueCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "List all of the songs currently in the queue.";
     }
 
     @Override

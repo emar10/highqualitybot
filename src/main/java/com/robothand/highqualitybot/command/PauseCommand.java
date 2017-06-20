@@ -21,7 +21,7 @@ public class PauseCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Pauses the player.";
     }
 
     @Override

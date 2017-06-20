@@ -21,7 +21,7 @@ public class NowPlayingCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Show the song currently playing.";
     }
 
     @Override

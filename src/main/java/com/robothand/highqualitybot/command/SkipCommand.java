@@ -21,7 +21,7 @@ public class SkipCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Skips the currently playing song.";
     }
 
     @Override

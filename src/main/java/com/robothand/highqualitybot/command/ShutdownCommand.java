@@ -22,7 +22,7 @@ public class ShutdownCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Shuts down the bot immediately. Use with caution!";
     }
 
     @Override

@@ -23,7 +23,7 @@ public class RepeatCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Show or change the repeat mode for the queue.";
     }
 
     @Override

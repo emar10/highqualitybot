@@ -22,7 +22,7 @@ public class PlayCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Resume the player, or provide a link to add a song to the queue!";
     }
 
     @Override

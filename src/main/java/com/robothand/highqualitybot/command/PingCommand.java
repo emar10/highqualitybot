@@ -21,7 +21,7 @@ public class PingCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return null;
+        return "Return a message to verify the bot is working.";
     }
 
     @Override
