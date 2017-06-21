@@ -4,6 +4,7 @@ import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
@@ -37,9 +38,16 @@ public class PlayCommand extends Command {
         // Get player for this guild
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
 
-        // join sender's channel if player is not already in one
+        // Auto-join channel if player is not already in one
         if (!musicPlayer.isInChannel()) {
-            musicPlayer.joinChannel(event.getMember().getVoiceState().getChannel());
+            // first try sender's channel
+            VoiceChannel voice = event.getMember().getVoiceState().getChannel();
+            if (voice != null) {
+                // otherwise we should just join the first ava
+                voice = guild.getVoiceChannels().get(0);
+            }
+
+            musicPlayer.joinChannel(voice);
         }
 
         if (args.length > 1) {
