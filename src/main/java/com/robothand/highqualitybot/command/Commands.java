@@ -30,8 +30,10 @@ public class Commands {
     }
 
     public void addCommand(Command command) {
-        aliases.add(command.getNames());
-        commands.put(command.getNames()[0], command);
+        if (command != null) {
+            aliases.add(command.getNames());
+            commands.put(command.getNames()[0], command);
+        }
     }
 
     // TODO allow getCommand to find commands using aliases
