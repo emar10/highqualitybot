@@ -4,13 +4,13 @@ import com.robothand.highqualitybot.Bot;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
  * Created by ethan on 6/19/17.
  */
 public class HelpCommand extends Command {
-    private final Hashtable<String, Command> commands;
 
     @Override
     public String[] getNames() {
@@ -29,25 +29,17 @@ public class HelpCommand extends Command {
         return "Lists all available commands. Provide a specific command for more info.";
     }
 
-    public HelpCommand() {
-        commands = new Hashtable<>();
-    }
-
-    public Command addCommand(Command command) {
-        commands.put(command.getNames()[0], command);
-        return command;
-    }
-
     @Override
     public void onCommand(MessageReceivedEvent event, String[] args) {
         MessageChannel channel = event.getChannel();
 
         if (args.length < 2) {
+            ArrayList<Command> commands = Commands.getInstance().getCommands();
+
             StringBuilder message = new StringBuilder();
             message.append("Available commands:\n");
 
-            for (String key : commands.keySet()) {
-                Command command = commands.get(key);
+            for (Command command : commands) {
                 String[] names = command.getNames();
                 String shortDesc = command.getShortDesc();
 
@@ -58,7 +50,7 @@ public class HelpCommand extends Command {
             channel.sendMessage(message.toString()).queue();
         } else {
             StringBuilder message = new StringBuilder();
-            Command command = commands.get(args[1]);
+            Command command = Commands.getInstance().getCommand(args[1]);
 
             if (command == null) {
                 message.append("Command \"**").append(args[1]).append("**\" is unknown.");

@@ -38,4 +38,14 @@ public class Commands {
     public Command getCommand(String name) {
         return commands.get(name);
     }
+
+    public ArrayList<Command> getCommands() {
+        ArrayList<Command> commandList = new ArrayList<>();
+
+        for (String key : commands.keySet()) {
+            commandList.add(commands.get(key));
+        }
+
+        return commandList;
+    }
 }
