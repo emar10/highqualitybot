@@ -42,12 +42,6 @@ public class Commands {
     }
 
     public ArrayList<Command> getCommands() {
-        ArrayList<Command> commandList = new ArrayList<>();
-
-        for (String key : commands.keySet()) {
-            commandList.add(commands.get(key));
-        }
-
-        return commandList;
+        return new ArrayList<>(commands.values());
     }
 }
