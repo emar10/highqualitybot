@@ -50,21 +50,24 @@ public class Bot {
         // prepare the audio sources
         GuildMusicPlayer.setupSources();
 
-        // help command
-        HelpCommand help = new HelpCommand();
-        api.addEventListener(help.addCommand(help));
+        // commands
+        Commands commands = Commands.getInstance();
 
         // utility commands
-        api.addEventListener(help.addCommand(new ShutdownCommand()));
-        api.addEventListener(help.addCommand(new PingCommand()));
+        commands.addCommand(new HelpCommand());
+        commands.addCommand(new ShutdownCommand());
+        commands.addCommand(new PingCommand());
 
         // music
-        api.addEventListener(help.addCommand(new PlayCommand()));
-        api.addEventListener(help.addCommand(new PauseCommand()));
-        api.addEventListener(help.addCommand(new NowPlayingCommand()));
-        api.addEventListener(help.addCommand(new SkipCommand()));
-        api.addEventListener(help.addCommand(new RepeatCommand()));
-        api.addEventListener(help.addCommand(new QueueCommand()));
+        commands.addCommand(new PlayCommand());
+        commands.addCommand(new PauseCommand());
+        commands.addCommand(new NowPlayingCommand());
+        commands.addCommand(new SkipCommand());
+        commands.addCommand(new RepeatCommand());
+        commands.addCommand(new QueueCommand());
+
+        // setup listeners
+        commands.addListeners(api);
 
     }
 

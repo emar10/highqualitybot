@@ -40,12 +40,12 @@ public class PlayCommand extends Command {
 
         // Auto-join channel if player is not already in one
         if (!musicPlayer.isInChannel()) {
-            VoiceChannel voice = event.getMember().getVoiceState().getChannel();
+            VoiceChannel voice;
             if (event.getMember().getVoiceState().inVoiceChannel()) {
                 // first try sender's channel
                 voice = event.getMember().getVoiceState().getChannel();
             } else {
-                // otherwise we should just join the first ava
+                // otherwise we should just join the first one
                 voice = guild.getVoiceChannels().get(0);
             }
 
