@@ -37,8 +37,12 @@ public class PauseCommand extends Command {
         if (musicPlayer.isPaused()) {
             channel.sendMessage("The player is already paused!").queue();
         } else {
-            musicPlayer.setPaused(true);
-            channel.sendMessage("Player paused!").queue();
+            if (musicPlayer.getPlayingTrack() == null) {
+                channel.sendMessage("There's nothing in the queue to pause!").queue();
+            } else {
+                musicPlayer.setPaused(true);
+                channel.sendMessage("Player paused!").queue();
+            }
         }
     }
 }

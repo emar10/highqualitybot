@@ -140,7 +140,7 @@ public class GuildMusicPlayer {
             public void noMatches() {
                 if (channel != null) {
                     String message = "Could not find any matches for \"" + search + "\"";
-                    channel.sendMessage(message);
+                    channel.sendMessage(message).queue();
                 }
             }
 
