@@ -56,6 +56,7 @@ public class GuildMusicPlayer {
         this.guild = guild;
 
         player.addListener(scheduler);
+        player.setPaused(true);
         GuildMusicPlayer.addPlayer(guild.getId(), this);
     }
 

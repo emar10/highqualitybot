@@ -28,7 +28,9 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void add(AudioTrack track) {
-        if (!player.startTrack(track, true)) {
+        if (player.startTrack(track, true)) {
+            player.setPaused(false);
+        } else {
             queue.offer(track);
         }
     }
@@ -49,6 +51,10 @@ public class TrackScheduler extends AudioEventAdapter {
         } else if (repeating == Repeat.ALL) {
             queue.add(player.getPlayingTrack());
             player.startTrack(queue.poll(), false);
+        }
+
+        if (player.getPlayingTrack() == null) {
+            player.setPaused(true);
         }
     }
 
