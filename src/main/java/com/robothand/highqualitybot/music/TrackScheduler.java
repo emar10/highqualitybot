@@ -19,11 +19,13 @@ public class TrackScheduler extends AudioEventAdapter {
     private Repeat repeating;
     private final Queue<AudioTrack> queue;
     private final AudioPlayer player;
+    private final GuildMusicPlayer guildPlayer;
     private AudioTrack prevTrack;
 
-    public TrackScheduler(AudioPlayer player) {
+    public TrackScheduler(AudioPlayer player, GuildMusicPlayer guildPlayer) {
         repeating = Repeat.OFF;
         this.player = player;
+        this.guildPlayer = guildPlayer;
         queue = new LinkedList<>();
     }
 
@@ -55,6 +57,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
         if (player.getPlayingTrack() == null) {
             player.setPaused(true);
+            guildPlayer.leaveChannel();
         }
     }
 

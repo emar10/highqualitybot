@@ -52,7 +52,7 @@ public class GuildMusicPlayer {
     public GuildMusicPlayer(Guild guild) {
         player = playerManager.createPlayer();
         handler = new AudioPlayerSendHandler(player);
-        scheduler = new TrackScheduler(player);
+        scheduler = new TrackScheduler(player, this);
         this.guild = guild;
 
         player.addListener(scheduler);
