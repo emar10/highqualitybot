@@ -38,6 +38,12 @@ public class PlayCommand extends Command {
         // Get player for this guild
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
 
+        // don't do anything if there's nothing in the queue
+        if (musicPlayer.getPlayingTrack() == null && args.length < 2) {
+            channel.sendMessage("There's nothing in the queue to resume!").queue();
+            return;
+        }
+
         // Auto-join channel if player is not already in one
         if (!musicPlayer.isInChannel()) {
             VoiceChannel voice;
@@ -61,8 +67,8 @@ public class PlayCommand extends Command {
             musicPlayer.playTrack(search, channel);
         } else {
             if (musicPlayer.isPaused()) {
-                musicPlayer.setPaused(false);
-                channel.sendMessage("Player resumed.").queue();
+                    musicPlayer.setPaused(false);
+                    channel.sendMessage("Player resumed.").queue();
             } else {
                 channel.sendMessage("The player is already running!").queue();
             }

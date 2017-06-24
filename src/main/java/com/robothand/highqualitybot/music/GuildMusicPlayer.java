@@ -52,10 +52,11 @@ public class GuildMusicPlayer {
     public GuildMusicPlayer(Guild guild) {
         player = playerManager.createPlayer();
         handler = new AudioPlayerSendHandler(player);
-        scheduler = new TrackScheduler(player);
+        scheduler = new TrackScheduler(player, this);
         this.guild = guild;
 
         player.addListener(scheduler);
+        player.setPaused(true);
         GuildMusicPlayer.addPlayer(guild.getId(), this);
     }
 
@@ -139,7 +140,7 @@ public class GuildMusicPlayer {
             public void noMatches() {
                 if (channel != null) {
                     String message = "Could not find any matches for \"" + search + "\"";
-                    channel.sendMessage(message);
+                    channel.sendMessage(message).queue();
                 }
             }
 
