@@ -34,18 +34,26 @@ public class QueueCommand extends Command {
         GuildMusicPlayer musicPlayer;
         Guild guild = event.getGuild();
         MessageChannel channel = event.getChannel();
+        StringBuilder message = new StringBuilder();
 
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
         Queue<AudioTrack> queue = musicPlayer.getQueue();
 
-        String message = "Current Queue:\n";
-        int currentTrack = 1;
+        if (queue.isEmpty()) {
+            message.append("The queue is empty!");
+        } else {
+            message.append("Current Queue (").append(queue.size()).append(" tracks):\n");
+            int currentTrack = 1;
 
-        for (AudioTrack track : queue) {
-            message = message.concat(currentTrack + ". " + track.getInfo().title + "\n");
-            currentTrack++;
+            for (AudioTrack track : queue) {
+                message.append(currentTrack + ". " + track.getInfo().title + "\n");
+
+                if (currentTrack++ > 10) {
+                    break;
+                }
+            }
         }
 
-        channel.sendMessage(message).queue();
+        channel.sendMessage(message.toString()).queue();
     }
 }
