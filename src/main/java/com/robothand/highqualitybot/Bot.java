@@ -65,6 +65,7 @@ public class Bot {
         commands.addCommand(new SkipCommand());
         commands.addCommand(new RepeatCommand());
         commands.addCommand(new QueueCommand());
+        commands.addCommand(new ClearCommand());
 
         // setup listeners
         commands.addListeners(api);
