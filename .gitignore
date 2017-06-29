@@ -7,3 +7,9 @@
 *.iml
 *.ipr
 *.iws
+
+# macos
+.DS_Store
+
+# config file
+config.txt

@@ -7,42 +7,47 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.Queue;
+
 /**
- * Created by ethan on 6/19/17.
+ * Created by ethan on 6/27/17.
  */
-public class NowPlayingCommand extends Command {
+public class ClearCommand extends Command {
+
     @Override
     public String[] getNames() {
-        return new String[] {"nowplaying", "np"};
+        return new String[] {"clear", "stop"};
     }
 
     @Override
     public String getDescription() {
-        return "Lists info on the song currently playing.\n" +
-                "Usage: " + Bot.PREFIX + "nowplaying";
+        return "Stops the player and wipes out the playlist. Will interrupt any currently playing.\n" +
+                "Usage: " + Bot.PREFIX + "clear";
     }
 
     @Override
     public String getShortDesc() {
-        return "Show the song currently playing.";
+        return "Clears the playlist and stops the player.";
     }
 
     @Override
     public void onCommand(MessageReceivedEvent event, String[] args) {
         GuildMusicPlayer musicPlayer;
-        AudioTrack track;
         Guild guild = event.getGuild();
         MessageChannel channel = event.getChannel();
-        StringBuilder message = new StringBuilder();
+        String message;
 
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
-        track = musicPlayer.getPlayingTrack();
 
-        if (track == null) {
-            message.append("Nothing is playing right now.");
+        if (musicPlayer.getPlayingTrack() == null) {
+            message = "The player is already stopped!";
         } else {
-            message.append("Playing right now: ").append(track.getInfo().title);
+            musicPlayer.getQueue().clear();
+            musicPlayer.skipTrack();
+
+            message = "The queue has been emptied and the player stopped!";
         }
-        channel.sendMessage(message.toString()).queue();
+
+        channel.sendMessage(message).queue();
     }
 }
