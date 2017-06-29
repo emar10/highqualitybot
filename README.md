@@ -54,3 +54,11 @@ Once connected, you can invoke commands through any text channel using the prefi
 ```
 .help
 ```
+
+## Attribution
+
+Development of High Quality Bot is made possible through the use of the following libraries:
+
+* [JDA](https://github.com/DV8FromTheWorld/JDA) by *DV8FromTheWorld* (Licensed under [Apache-2.0](https://apache.org/licenses/LICENSE-2.0))
+* [LavaPlayer](https://github.com/sedmelluq/LavaPlayer) by *sedmelluq* (Licensed under [Apache-2.0](https://apache.org/licenses/LICENSE-2.0))
+
