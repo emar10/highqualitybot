@@ -125,14 +125,29 @@ public class GuildMusicPlayer {
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                for (AudioTrack track : playlist.getTracks()) {
-                    scheduler.add(track);
+                StringBuilder messageBuilder = new StringBuilder("Added ");
+                AudioTrack selected = playlist.getSelectedTrack();
+
+                if (selected != null) {
+                    scheduler.add(selected);
+                    messageBuilder.append("\"")
+                            .append(selected.getInfo().title)
+                            .append("\"");
+                } else {
+                    // Add the entire playlist
+                    for (AudioTrack track : playlist.getTracks()) {
+                        scheduler.add(track);
+                    }
+
+                    messageBuilder.append(playlist.getTracks().size())
+                            .append(" tracks from \"")
+                            .append(playlist.getName())
+                            .append("\"");
                 }
+                messageBuilder.append(" to the queue");
 
                 if (channel != null) {
-                    String message = "Added " + playlist.getTracks().size() + " tracks from \"" + playlist.getName()
-                                   + "\" to the queue.";
-                    channel.sendMessage(message).queue();
+                    channel.sendMessage(messageBuilder.toString()).queue();
                 }
             }
 
