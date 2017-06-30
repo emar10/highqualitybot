@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class Bot {
     static JDA api;
     public static String PREFIX;
+    public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
         File config;
