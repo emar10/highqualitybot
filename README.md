@@ -1,4 +1,4 @@
-# High Quality Bot
+# High Quality Bot [![CircleCI](https://circleci.com/gh/sasquench/highqualitybot/tree/master.svg?style=svg)](https://circleci.com/gh/sasquench/highqualitybot/tree/master)
 
 High Quality Bot is a Java-based bot for the VoIP and chat platform [Discord](https://discordapp.com) built on [JDA](https://github.com/DV8FromTheWorld/JDA) and [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Currently features commands for music playback, but future versions are planned to include other features such as administrative commands and chat tools/games.
 
@@ -54,3 +54,11 @@ Once connected, you can invoke commands through any text channel using the prefi
 ```
 .help
 ```
+
+## Attribution
+
+Development of High Quality Bot is made possible through the use of the following libraries:
+
+* [JDA](https://github.com/DV8FromTheWorld/JDA) by *DV8FromTheWorld* (Licensed under [Apache-2.0](https://apache.org/licenses/LICENSE-2.0))
+* [LavaPlayer](https://github.com/sedmelluq/LavaPlayer) by *sedmelluq* (Licensed under [Apache-2.0](https://apache.org/licenses/LICENSE-2.0))
+
