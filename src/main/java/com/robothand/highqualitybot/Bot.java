@@ -56,6 +56,7 @@ public class Bot {
 
         // utility commands
         commands.addCommand(new HelpCommand());
+        commands.addCommand(new StatusCommand());
         commands.addCommand(new ShutdownCommand());
         commands.addCommand(new PingCommand());
 
@@ -69,7 +70,7 @@ public class Bot {
         commands.addCommand(new ClearCommand());
 
         // setup listeners
-        commands.addListeners(api);
+        commands.setupListeners(api);
 
     }
 
