@@ -23,7 +23,7 @@ public class Commands {
         aliases = new ArrayList<>();
     }
 
-    public void addListeners(JDA jda) {
+    public void setupListeners(JDA jda) {
         for (String key : commands.keySet()) {
             jda.addEventListener(commands.get(key));
         }

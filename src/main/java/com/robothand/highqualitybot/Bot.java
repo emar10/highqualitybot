@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class Bot {
     static JDA api;
     public static String PREFIX;
+    public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
         File config;
@@ -55,6 +56,7 @@ public class Bot {
 
         // utility commands
         commands.addCommand(new HelpCommand());
+        commands.addCommand(new StatusCommand());
         commands.addCommand(new ShutdownCommand());
         commands.addCommand(new PingCommand());
 
@@ -68,7 +70,7 @@ public class Bot {
         commands.addCommand(new ClearCommand());
 
         // setup listeners
-        commands.addListeners(api);
+        commands.setupListeners(api);
 
     }
 

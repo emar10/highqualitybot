@@ -1,0 +1,10 @@
+dependencies:
+  pre:
+    - go get github.com/tcnksm/ghr
+
+deployment:
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    commands:
+      - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $CIRCLE_TAG $CIRCLE_ARTIFACTS
+
