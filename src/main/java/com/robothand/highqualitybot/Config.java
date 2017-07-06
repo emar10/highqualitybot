@@ -6,13 +6,16 @@ import java.util.Hashtable;
 import java.util.Scanner;
 
 /**
- * Created by ethan on 7/6/17.
+ * Config.java
+ *
+ * Reads in properties from a specified configuration file, and provides access to the values.
  */
 public class Config {
-    private File configFile;
-    private Hashtable<String, String> properties;
+    private final File configFile;
+    private final Hashtable<String, String> properties;
 
     public Config(String path) throws FileNotFoundException {
+        properties = new Hashtable<>();
         configFile = new File(path);
 
         Scanner s = new Scanner(configFile);
@@ -33,5 +36,9 @@ public class Config {
                 properties.replace(key, value);
             }
         }
+    }
+
+    public String getProperty(String key) {
+        return properties.get(key);
     }
 }
