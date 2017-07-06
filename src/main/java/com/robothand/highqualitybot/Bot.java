@@ -19,21 +19,13 @@ public class Bot {
     public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
-        File config;
-        String token;
+        Config config = null;
 
-        System.out.println("Attempting to read \"config.txt\"");
-        config = new File("config.txt");
-        token = null;
+        System.out.println("Attempting to read \"config.cfg\"");
 
         try {
-            Scanner s = new Scanner(config);
+            config = new Config("config.cfg");
 
-            // token
-            token = s.nextLine();
-
-            // prefix
-            PREFIX = s.nextLine();
 
         } catch (FileNotFoundException e) {
             System.err.println("FATAL: could not find file \"config.txt\"");
@@ -42,7 +34,7 @@ public class Bot {
 
         System.out.println("Connecting to Discord...");
         try {
-            api = new JDABuilder(AccountType.BOT).setToken(token).buildAsync();
+            api = new JDABuilder(AccountType.BOT).setToken(config.getProperty("token")).buildAsync();
         } catch (Exception e) {
             System.err.println("FATAL: Could not connect to Discord");
             System.exit(1);
@@ -52,6 +44,7 @@ public class Bot {
         GuildMusicPlayer.setupSources();
 
         // commands
+        PREFIX = config.getProperty("prefix");
         Commands commands = Commands.getInstance();
 
         // utility commands
