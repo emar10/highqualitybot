@@ -12,16 +12,13 @@ import java.util.Scanner;
  */
 public class Config {
     private final File configFile;
-    private final Hashtable<String, String> properties;
-    private final String DEF_VALUE = "not_set";
+
+    public String TOKEN;
+    public String PREFIX;
+
 
     public Config(String path) throws FileNotFoundException {
-        properties = new Hashtable<>();
         configFile = new File(path);
-
-        // properties
-        properties.put("token", DEF_VALUE);
-        properties.put("prefix", DEF_VALUE);
 
         Scanner s = new Scanner(configFile);
 
@@ -37,11 +34,14 @@ public class Config {
             value = split[1].trim();
 
             // place the property if it is known
-            properties.replace(key, value);
-        }
-    }
+            switch (key) {
+                case "token":
+                    TOKEN = value;
+                    break;
 
-    public String getProperty(String key) {
-        return properties.get(key);
+                case "prefix":
+                    PREFIX = value;
+            }
+        }
     }
 }

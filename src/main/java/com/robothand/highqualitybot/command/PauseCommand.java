@@ -18,7 +18,7 @@ public class PauseCommand extends Command {
     @Override
     public String getDescription() {
         return "Pauses playback until resumed with the play command. Does nothing if the player is already paused.\n" +
-                "Usage: " + Bot.PREFIX + "pause";
+                "Usage: " + Bot.config.PREFIX + "pause";
     }
 
     @Override

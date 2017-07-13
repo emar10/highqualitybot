@@ -16,7 +16,7 @@ public class StatusCommand extends Command {
     @Override
     public String getDescription() {
         return "Prints the current running version of High Quality Bot.\n" +
-                "Usage: " + Bot.PREFIX + "status";
+                "Usage: " + Bot.config.PREFIX + "status";
     }
 
     @Override

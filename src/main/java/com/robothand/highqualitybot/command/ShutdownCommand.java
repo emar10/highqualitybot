@@ -19,7 +19,7 @@ public class ShutdownCommand extends Command {
     public String getDescription() {
         return "Immediately shuts down the bot. If you don't have the ability to start it up again, you probably " +
                 "shouldn't use this.\n" +
-                "Usage: " + Bot.PREFIX + "shutdown";
+                "Usage: " + Bot.config.PREFIX + "shutdown";
     }
 
     @Override

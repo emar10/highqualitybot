@@ -22,9 +22,9 @@ public abstract class Command extends ListenerAdapter {
         String content = message.getRawContent();
 
         // check for command prefix
-        if (content.startsWith(Bot.PREFIX)) {
+        if (content.startsWith(Bot.config.PREFIX)) {
             // strip it off and split it
-            String[] args = content.replaceFirst(Bot.PREFIX, "").split(" ");
+            String[] args = content.replaceFirst(Bot.config.PREFIX, "").split(" ");
 
             // check with names
             for (String current : getNames()) {

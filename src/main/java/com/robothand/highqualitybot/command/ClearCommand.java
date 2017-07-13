@@ -22,7 +22,7 @@ public class ClearCommand extends Command {
     @Override
     public String getDescription() {
         return "Stops the player and wipes out the playlist. Will interrupt any currently playing.\n" +
-                "Usage: " + Bot.PREFIX + "clear";
+                "Usage: " + Bot.config.PREFIX + "clear";
     }
 
     @Override

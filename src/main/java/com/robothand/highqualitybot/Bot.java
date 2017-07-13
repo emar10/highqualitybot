@@ -15,11 +15,11 @@ import java.util.Scanner;
  */
 public class Bot {
     static JDA api;
-    public static String PREFIX;
+    public static Config config;
     public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
-        Config config = null;
+        config = null;
 
         System.out.println("Attempting to read \"config.cfg\"");
 
@@ -34,7 +34,7 @@ public class Bot {
 
         System.out.println("Connecting to Discord...");
         try {
-            api = new JDABuilder(AccountType.BOT).setToken(config.getProperty("token")).buildAsync();
+            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildAsync();
         } catch (Exception e) {
             System.err.println("FATAL: Could not connect to Discord");
             System.exit(1);
@@ -44,7 +44,6 @@ public class Bot {
         GuildMusicPlayer.setupSources();
 
         // commands
-        PREFIX = config.getProperty("prefix");
         Commands commands = Commands.getInstance();
 
         // utility commands

@@ -21,7 +21,7 @@ public class HelpCommand extends Command {
     public String getDescription() {
         return "Lists all available commands. Provide the name of another command to get more information as well as" +
                 "usage.\n" +
-                "Usage: " + Bot.PREFIX + "help [command]";
+                "Usage: " + Bot.config.PREFIX + "help [command]";
     }
 
     @Override
