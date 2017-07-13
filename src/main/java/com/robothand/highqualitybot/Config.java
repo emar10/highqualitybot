@@ -13,10 +13,15 @@ import java.util.Scanner;
 public class Config {
     private final File configFile;
     private final Hashtable<String, String> properties;
+    private final String DEF_VALUE = "not_set";
 
     public Config(String path) throws FileNotFoundException {
         properties = new Hashtable<>();
         configFile = new File(path);
+
+        // properties
+        properties.put("token", DEF_VALUE);
+        properties.put("prefix", DEF_VALUE);
 
         Scanner s = new Scanner(configFile);
 
@@ -31,10 +36,8 @@ public class Config {
             key = split[0].trim();
             value = split[1].trim();
 
-            // place the property, overwrite if already present
-            if (properties.putIfAbsent(key, value) != null) {
-                properties.replace(key, value);
-            }
+            // place the property if it is known
+            properties.replace(key, value);
         }
     }
 
