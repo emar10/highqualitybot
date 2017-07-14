@@ -18,6 +18,9 @@ public class Config {
 
 
     public Config(String path) throws FileNotFoundException {
+        // set default values
+        PREFIX = ".";
+
         configFile = new File(path);
 
         Scanner s = new Scanner(configFile);
@@ -41,6 +44,17 @@ public class Config {
 
                 case "prefix":
                     PREFIX = value;
+            }
+
+            // Check for values that would need user input
+            if (TOKEN == null) {
+                Scanner c = new Scanner(System.in);
+
+                System.out.println("Warning: OAuth token not set in config. Please enter your token below:");
+                System.out.print("> ");
+                TOKEN = c.nextLine();
+
+                System.out.println("Token set. Recommend setting in config file for future runs.");
             }
         }
     }
