@@ -6,20 +6,17 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 /**
  * main class
  */
 public class Bot {
-    static JDA api;
+    private static JDA api;
     public static Config config;
     public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
-        config = null;
 
         System.out.println("Attempting to read \"config.cfg\"");
 
@@ -28,7 +25,7 @@ public class Bot {
 
 
         } catch (FileNotFoundException e) {
-            System.err.println("FATAL: could not find file \"config.txt\"");
+            System.err.println("FATAL: could not find file \"config.txt\" in " + System.getProperty("user.dir"));
             System.exit(1);
         }
 
