@@ -44,6 +44,10 @@ public class Config {
 
                 case "prefix":
                     PREFIX = value;
+                    break;
+
+                default:
+                    System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
             }
 
             // Check for values that would need user input
