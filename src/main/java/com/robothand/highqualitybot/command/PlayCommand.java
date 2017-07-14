@@ -21,7 +21,7 @@ public class PlayCommand extends Command {
     public String getDescription() {
         return "With no arguments, resumes playback if the player is paused. Providing a valid audio source (YouTube " +
                 "link, SoundCloud, etc.) as an argument will add it to the queue. You can also provide a link to a " +
-                "playlist. \n Usage: " + Bot.PREFIX + "play [link]";
+                "playlist. \n Usage: " + Bot.config.PREFIX + "play [link]";
     }
 
     @Override

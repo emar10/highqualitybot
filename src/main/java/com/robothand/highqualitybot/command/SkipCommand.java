@@ -18,7 +18,7 @@ public class SkipCommand extends Command {
     @Override
     public String getDescription() {
         return "Skips to the next song in the queue. If there are no other songs, simply stops playback.\n" +
-                "Usage: " + Bot.PREFIX + "skip";
+                "Usage: " + Bot.config.PREFIX + "skip";
     }
 
     @Override

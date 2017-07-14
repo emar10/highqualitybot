@@ -6,43 +6,32 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 /**
  * main class
  */
 public class Bot {
-    static JDA api;
-    public static String PREFIX;
+    private static JDA api;
+    public static Config config;
     public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
-        File config;
-        String token;
 
-        System.out.println("Attempting to read \"config.txt\"");
-        config = new File("config.txt");
-        token = null;
+        System.out.println("Attempting to read \"config.cfg\"");
 
         try {
-            Scanner s = new Scanner(config);
+            config = new Config("config.cfg");
 
-            // token
-            token = s.nextLine();
-
-            // prefix
-            PREFIX = s.nextLine();
 
         } catch (FileNotFoundException e) {
-            System.err.println("FATAL: could not find file \"config.txt\"");
+            System.err.println("FATAL: could not find file \"config.txt\" in " + System.getProperty("user.dir"));
             System.exit(1);
         }
 
         System.out.println("Connecting to Discord...");
         try {
-            api = new JDABuilder(AccountType.BOT).setToken(token).buildAsync();
+            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildAsync();
         } catch (Exception e) {
             System.err.println("FATAL: Could not connect to Discord");
             System.exit(1);

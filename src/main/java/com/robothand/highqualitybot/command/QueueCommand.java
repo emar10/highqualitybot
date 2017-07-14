@@ -21,7 +21,7 @@ public class QueueCommand extends Command {
     @Override
     public String getDescription() {
         return "Prints out a list of all songs currently in the music queue.\n" +
-                "Usage: " + Bot.PREFIX + "list";
+                "Usage: " + Bot.config.PREFIX + "list";
     }
 
     @Override

@@ -18,7 +18,7 @@ High Quality Bot requires Java Development Kit 8. Building is done with Gradle, 
 1. Open a Command Prompt and move to the cloned repository
 2. Run `gradlew shadowJar`
 
-On all platforms the built executable JAR will be placed in `build/libs/highqualitybot-<version>.jar`
+On all platforms the built JAR will be placed in `build/libs/highqualitybot-<version>.jar`
 
 ## Setting Up the Bot
 
@@ -35,18 +35,24 @@ Before you can run the bot yourself, you'll need to set up an application on Dis
 
 ### Configuring
 
-High Quality Bot expects a file called `config.txt` to be in the same directory as the .jar file, and won't run without it. At present, there should only be two lines in the config:
-* Bot account's token
-* Desired command prefix
+High Quality Bot expects a file called `config.cfg` to be in the same directory as the .jar file, and won't run without it. The format is simply one `key=value` declaration per line. Currently available options to set are:
+* `token` - Your Bot account's OAuth token
+* `prefix` - The desired character (or string of characters if you're a crazy person) used to invoke commands.
 
-Example `config.txt`:
+Example `config.cfg`:
 
 ```
-MjY4MjExODI2MzU1ODYzNTUz.DByjTQ.1ycw5crEGVZGo-ckyGakydsno0o (this isn't a valid token don't even try it)
-.
+# Parser will ignore lines starting with '#'
+
+# Token (this one isn't valid don't even try it)
+token=MjY4MjExODI2MzU1ODYzNTUz.DByjTQ.1ycw5crEGVZGo-ckyGakydsno0o (this isn't a valid token don't even try it)
+
+# Prefix
+prefix=.
+
 ```
 
-From here High Quality Bot should be ready to run. Place the .jar and config wherever you like, and run it with `java -jar highqualitybot-<version>.jar`
+From here High Quality Bot should be ready to run. Place the .jar and config in the same directory wherever you like, and run it with `java -jar highqualitybot-<version>.jar`
 
 ## Using the Bot
 

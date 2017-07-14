@@ -19,7 +19,7 @@ public class NowPlayingCommand extends Command {
     @Override
     public String getDescription() {
         return "Lists info on the song currently playing.\n" +
-                "Usage: " + Bot.PREFIX + "nowplaying";
+                "Usage: " + Bot.config.PREFIX + "nowplaying";
     }
 
     @Override
