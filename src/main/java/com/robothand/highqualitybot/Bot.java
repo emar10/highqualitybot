@@ -18,25 +18,6 @@ public class Bot {
 
     public static void main(String[] args) {
 
-        System.out.println("Attempting to read \"config.cfg\"");
-
-        try {
-            config = new Config("config.cfg");
-
-
-        } catch (FileNotFoundException e) {
-            System.err.println("FATAL: could not find file \"config.txt\" in " + System.getProperty("user.dir"));
-            System.exit(1);
-        }
-
-        System.out.println("Connecting to Discord...");
-        try {
-            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildAsync();
-        } catch (Exception e) {
-            System.err.println("FATAL: Could not connect to Discord");
-            System.exit(1);
-        }
-
         // prepare the audio sources
         GuildMusicPlayer.setupSources();
 
@@ -57,6 +38,25 @@ public class Bot {
         commands.addCommand(new RepeatCommand());
         commands.addCommand(new QueueCommand());
         commands.addCommand(new ClearCommand());
+
+        System.out.println("Attempting to read \"config.cfg\"");
+
+        try {
+            config = new Config("config.cfg");
+
+
+        } catch (FileNotFoundException e) {
+            System.err.println("FATAL: could not find file \"config.txt\" in " + System.getProperty("user.dir"));
+            System.exit(1);
+        }
+
+        System.out.println("Connecting to Discord...");
+        try {
+            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildAsync();
+        } catch (Exception e) {
+            System.err.println("FATAL: Could not connect to Discord");
+            System.exit(1);
+        }
 
         // setup listeners
         commands.setupListeners(api);

@@ -1,6 +1,11 @@
 package com.robothand.highqualitybot;
 
+import com.robothand.highqualitybot.command.Command;
+import com.robothand.highqualitybot.command.Commands;
+import com.robothand.highqualitybot.permission.PermissionManager;
+
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
@@ -10,14 +15,20 @@ import java.util.Scanner;
  * Reads in properties from a specified configuration file, and provides access to the values.
  */
 public class Config {
-    public String TOKEN;
+    String TOKEN;
     public String PREFIX;
     public String OWNERID;
+    public ArrayList<Command> COMMANDPERMS;
+    public boolean WHITELIST;
+    public String[] PERMGROUPS;
 
 
     public Config(String path) throws FileNotFoundException {
         // set default values
         PREFIX = ".";
+        COMMANDPERMS = Commands.getInstance().getCommands();
+        WHITELIST = true;
+        PERMGROUPS = new String[] {"permissions/"};
 
         // read config.cfg
         Hashtable<String,String> table = Utils.readCFG("config.cfg");
@@ -36,6 +47,19 @@ public class Config {
 
                 case "ownerid":
                     OWNERID = value;
+                    break;
+
+                case "commandperms":
+                    COMMANDPERMS = PermissionManager.instance().parseCommandList(value);
+                    break;
+
+                case "whitelist":
+                    if (value.equals("true")) {
+                        WHITELIST = true;
+                    } else if (value.equals("false")) {
+                        WHITELIST = false;
+                    }
+                    break;
 
                 default:
                     System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
