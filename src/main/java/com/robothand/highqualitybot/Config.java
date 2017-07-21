@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Config {
     public String TOKEN;
     public String PREFIX;
+    public String OWNER;
 
 
     public Config(String path) throws FileNotFoundException {
@@ -33,6 +34,9 @@ public class Config {
                 case "prefix":
                     PREFIX = value;
                     break;
+
+                case "owner":
+                    OWNER = value;
 
                 default:
                     System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
