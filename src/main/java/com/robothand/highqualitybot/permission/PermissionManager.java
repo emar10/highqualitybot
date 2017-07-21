@@ -19,7 +19,7 @@ public class PermissionManager {
 
     public boolean hasPermission(User user, Command command) {
         // check for owner
-        if (user.getId() == Bot.config.OWNER) {
+        if (user.getId() == Bot.config.OWNERID) {
             return true;
         }
 

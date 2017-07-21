@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -13,7 +12,7 @@ import java.util.Scanner;
 public class Config {
     public String TOKEN;
     public String PREFIX;
-    public String OWNER;
+    public String OWNERID;
 
 
     public Config(String path) throws FileNotFoundException {
@@ -35,8 +34,8 @@ public class Config {
                     PREFIX = value;
                     break;
 
-                case "owner":
-                    OWNER = value;
+                case "ownerid":
+                    OWNERID = value;
 
                 default:
                     System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
