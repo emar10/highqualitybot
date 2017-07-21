@@ -17,9 +17,13 @@ public class PermissionManager {
         groups = new ArrayList<>();
     }
 
+    public static PermissionManager instance() {
+        return instance;
+    }
+
     public boolean hasPermission(User user, Command command) {
         // check for owner
-        if (user.getId() == Bot.config.OWNERID) {
+        if (user.getId().equals(Bot.config.OWNERID)) {
             return true;
         }
 
