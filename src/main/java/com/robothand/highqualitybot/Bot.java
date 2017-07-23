@@ -2,6 +2,7 @@ package com.robothand.highqualitybot;
 
 import com.robothand.highqualitybot.command.*;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
+import com.robothand.highqualitybot.permission.PermissionManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -52,11 +53,14 @@ public class Bot {
 
         System.out.println("Connecting to Discord...");
         try {
-            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildAsync();
+            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildBlocking();
         } catch (Exception e) {
             System.err.println("FATAL: Could not connect to Discord");
             System.exit(1);
         }
+
+        // read permissions
+        PermissionManager.instance().readGroups();
 
         // setup listeners
         commands.setupListeners(api);

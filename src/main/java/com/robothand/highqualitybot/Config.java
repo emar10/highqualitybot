@@ -1,7 +1,6 @@
 package com.robothand.highqualitybot;
 
 import com.robothand.highqualitybot.command.Command;
-import com.robothand.highqualitybot.command.Commands;
 import com.robothand.highqualitybot.permission.PermissionManager;
 
 import java.io.FileNotFoundException;
@@ -20,15 +19,15 @@ public class Config {
     public String OWNERID;
     public ArrayList<Command> COMMANDPERMS;
     public boolean WHITELIST;
-    public String[] PERMGROUPS;
+    public ArrayList<String> PERMGROUPS;
 
 
     public Config(String path) throws FileNotFoundException {
         // set default values
         PREFIX = ".";
-        COMMANDPERMS = Commands.getInstance().getCommands();
+        COMMANDPERMS = new ArrayList<>();
         WHITELIST = true;
-        PERMGROUPS = new String[] {"permissions/"};
+        PERMGROUPS = new ArrayList<>();
 
         // read config.cfg
         Hashtable<String,String> table = Utils.readCFG("config.cfg");
@@ -58,6 +57,12 @@ public class Config {
                         WHITELIST = true;
                     } else if (value.equals("false")) {
                         WHITELIST = false;
+                    }
+                    break;
+
+                case "permissiongroups":
+                    for (String filename : value.split(",")) {
+                        PERMGROUPS.add(filename.trim());
                     }
                     break;
 

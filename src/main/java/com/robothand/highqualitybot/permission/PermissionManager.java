@@ -3,9 +3,9 @@ package com.robothand.highqualitybot.permission;
 import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.command.Command;
 import com.robothand.highqualitybot.command.Commands;
-import net.dv8tion.jda.core.entities.User;
-import sun.security.krb5.Config;
+import net.dv8tion.jda.core.entities.Member;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -42,9 +42,9 @@ public class PermissionManager {
         return commands;
     }
 
-    public boolean hasPermission(User user, Command command) {
+    public boolean hasPermission(Member member, Command command) {
         // check for owner
-        if (user.getId().equals(Bot.config.OWNERID)) {
+        if (member.getUser().getId().equals(Bot.config.OWNERID)) {
             return true;
         }
 
@@ -58,8 +58,25 @@ public class PermissionManager {
             permission = !permission;
         }
 
-        // TODO check PermissionGroups
+        // check PermissionGroups
+        int priority = 0;
+        for (PermissionGroup group : groups) {
+            if (group.appliesTo(member) && group.getPriority() > priority) {
+                priority = group.getPriority();
+                permission = group.hasPermission(command);
+            }
+        }
 
         return permission;
+    }
+
+    public void readGroups() {
+        for (String filename : Bot.config.PERMGROUPS) {
+            try {
+                groups.add(new PermissionGroup(filename));
+            } catch (FileNotFoundException e) {
+                System.err.println("ERROR: could not find file " + filename);
+            }
+        }
     }
 }
