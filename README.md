@@ -84,8 +84,7 @@ High Quality Bot makes use of a permissions system that integrates with Discord'
 allowed to run a command, the bot starts with the permissions set in the `config.cfg`. From there, another .cfg file is
 added for each Discord Role you would like the bot to make use of. This file includes lists of commands that users in
 the role will be granted or denied permission to use, as well as a priority in the event of collision between two roles.
-Once the file is created, simply add its path to `permissiongroups` in the main config. Several preset configs are
-located in the `examplegroups` folder.
+Once the file is created, simply add its path to `permissiongroups` in the main config.
 
 Example Permission Group `DJ.cfg`
 
