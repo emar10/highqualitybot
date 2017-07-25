@@ -14,15 +14,17 @@ import java.util.Hashtable;
  * Represents a set of permissions for a group of Users
  */
 public class PermissionGroup {
-    private ArrayList<Command> commandList;
-    private boolean whitelist;
+    private ArrayList<Command> allowed;
+    private ArrayList<Command> disallowed;
+    private boolean allowedHasPrecedence;
     private int priority;
     private Role role;
 
     public PermissionGroup(String filename) throws FileNotFoundException {
         // default values
-        commandList = new ArrayList<>();
-        whitelist = true;
+        allowed = new ArrayList<>();
+        disallowed = new ArrayList<>();
+        allowedHasPrecedence = true;
         priority = 0;
 
         Hashtable<String,String> table = Utils.readCFG(filename);
@@ -31,15 +33,18 @@ public class PermissionGroup {
             String value = table.get(key);
 
             switch (key) {
-                case "commands":
-                    commandList = PermissionManager.instance().parseCommandList(value);
+                case "allowed":
+                    allowed = PermissionManager.instance().parseCommandList(value);
                     break;
 
-                case "whitelist":
+                case "disallowed":
+                    disallowed = PermissionManager.instance().parseCommandList(value);
+
+                case "allowedHasPrecedence":
                     if (value.equals("true")) {
-                        whitelist = true;
+                        allowedHasPrecedence = true;
                     } else if (value.equals("false")) {
-                        whitelist = false;
+                        allowedHasPrecedence = false;
                     }
                     break;
 
@@ -72,11 +77,15 @@ public class PermissionGroup {
         return false;
     }
 
-    public boolean hasPermission(Command command) {
-        boolean permission = commandList.contains(command);
+    public int hasPermission(Command command) {
+        int permission = 0;
 
-        if (!whitelist) {
-            permission = !permission;
+        if (allowed.contains(command)) {
+            permission = 1;
+        }
+
+        if (disallowed.contains(command) && (permission == 0 || !allowedHasPrecedence)) {
+            permission = -1;
         }
 
         return permission;

@@ -17,16 +17,18 @@ public class Config {
     String TOKEN;
     public String PREFIX;
     public String OWNERID;
-    public ArrayList<Command> COMMANDPERMS;
-    public boolean WHITELIST;
+    public ArrayList<Command> ALLOWED;
+    public ArrayList<Command> DISALLOWED;
+    public boolean ALLOWEDHASPRECEDENCE;
     public ArrayList<String> PERMGROUPS;
 
 
     public Config(String path) throws FileNotFoundException {
         // set default values
         PREFIX = ".";
-        COMMANDPERMS = new ArrayList<>();
-        WHITELIST = true;
+        ALLOWED = new ArrayList<>();
+        DISALLOWED = new ArrayList<>();
+        ALLOWEDHASPRECEDENCE = true;
         PERMGROUPS = new ArrayList<>();
 
         // read config.cfg
@@ -48,15 +50,19 @@ public class Config {
                     OWNERID = value;
                     break;
 
-                case "commandperms":
-                    COMMANDPERMS = PermissionManager.instance().parseCommandList(value);
+                case "allowed":
+                    ALLOWED = PermissionManager.instance().parseCommandList(value);
                     break;
 
-                case "whitelist":
+                case "disallowed":
+                    DISALLOWED = PermissionManager.instance().parseCommandList(value);
+                    break;
+
+                case "allowedHasPrecedence":
                     if (value.equals("true")) {
-                        WHITELIST = true;
+                        ALLOWEDHASPRECEDENCE = true;
                     } else if (value.equals("false")) {
-                        WHITELIST = false;
+                        ALLOWEDHASPRECEDENCE = false;
                     }
                     break;
 
@@ -70,6 +76,8 @@ public class Config {
                     System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
             }
         }
+
+        // TODO if default perms do not encompass every command, set all to disallowed
 
         // Check for values that would need user input
         if (TOKEN == null) {

@@ -51,11 +51,18 @@ public class PermissionManager {
         boolean permission = false;
 
         // start with default permissions
-        permission = Bot.config.COMMANDPERMS.contains(command);
+        int def = 0;
+        if (Bot.config.ALLOWED.contains(command)) {
+            def = 1;
+        }
 
-        // flip if in blacklist mode
-        if (!Bot.config.WHITELIST) {
-            permission = !permission;
+        if (Bot.config.DISALLOWED.contains(command) && (def == 0 || !Bot.config.ALLOWEDHASPRECEDENCE)) {
+            def = -1;
+        }
+
+        switch (def) {
+            case -1:
+
         }
 
         // check PermissionGroups
@@ -63,7 +70,16 @@ public class PermissionManager {
         for (PermissionGroup group : groups) {
             if (group.appliesTo(member) && group.getPriority() > priority) {
                 priority = group.getPriority();
-                permission = group.hasPermission(command);
+                switch (group.hasPermission(command)) {
+                    case -1:
+                        permission = false;
+                        break;
+                    case 0:
+                        break;
+                    case 1:
+                        permission = true;
+                        break;
+                }
             }
         }
 
