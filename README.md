@@ -99,7 +99,7 @@ allowed=play,pause,skip,queue
 
 # No Disallowed commands required
 
-# Priority (should be set higher than any conflicting groups you don't want to override this one)
+# Priority (should be set higher than any conflicting groups that you don't want to override this one)
 priority=9
 
 ```
