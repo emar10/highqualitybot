@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.permission;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.command.Command;
 import com.robothand.highqualitybot.command.Commands;
 import net.dv8tion.jda.core.entities.Member;
@@ -44,7 +45,7 @@ public class PermissionManager {
 
     public boolean hasPermission(Member member, Command command) {
         // check for owner
-        if (member.getUser().getId().equals(Bot.config.OWNERID)) {
+        if (member.getUser().getId().equals(Config.OWNERID)) {
             return true;
         }
 
@@ -52,11 +53,11 @@ public class PermissionManager {
 
         // start with default permissions
         int def = 0;
-        if (Bot.config.ALLOWED.contains(command)) {
+        if (Config.ALLOWED.contains(command)) {
             def = 1;
         }
 
-        if (Bot.config.DISALLOWED.contains(command) && (def == 0 || !Bot.config.ALLOWEDHASPRECEDENCE)) {
+        if (Config.DISALLOWED.contains(command) && (def == 0 || !Config.ALLOWEDHASPRECEDENCE)) {
             def = -1;
         }
 
@@ -87,7 +88,7 @@ public class PermissionManager {
     }
 
     public void readGroups() {
-        for (String filename : Bot.config.PERMGROUPS) {
+        for (String filename : Config.PERMGROUPS) {
             try {
                 groups.add(new PermissionGroup(filename));
             } catch (FileNotFoundException e) {

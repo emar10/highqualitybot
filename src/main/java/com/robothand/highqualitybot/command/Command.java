@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.permission.PermissionManager;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
@@ -24,9 +25,9 @@ public abstract class Command extends ListenerAdapter {
         String content = message.getRawContent();
 
         // check for command prefix
-        if (content.startsWith(Bot.config.PREFIX)) {
+        if (content.startsWith(Config.PREFIX)) {
             // strip it off and split it
-            String[] args = content.replaceFirst(Bot.config.PREFIX, "").split(" ");
+            String[] args = content.replaceFirst(Config.PREFIX, "").split(" ");
 
             // check with names
             for (String current : getNames()) {

@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
  */
 public class Bot {
     private static JDA api;
-    public static Config config;
     public static final String VERSION = "0.1";
 
     public static void main(String[] args) {
@@ -43,17 +42,17 @@ public class Bot {
         System.out.println("Attempting to read \"config.cfg\"");
 
         try {
-            config = new Config("config.cfg");
+            Config.loadConfig("config.cfg");
 
 
         } catch (FileNotFoundException e) {
-            System.err.println("FATAL: could not find file \"config.txt\" in " + System.getProperty("user.dir"));
+            System.err.println("FATAL: could not find file \"config.cfg\" in " + System.getProperty("user.dir"));
             System.exit(1);
         }
 
         System.out.println("Connecting to Discord...");
         try {
-            api = new JDABuilder(AccountType.BOT).setToken(config.TOKEN).buildBlocking();
+            api = new JDABuilder(AccountType.BOT).setToken(Config.TOKEN).buildBlocking();
         } catch (Exception e) {
             System.err.println("FATAL: Could not connect to Discord");
             System.exit(1);

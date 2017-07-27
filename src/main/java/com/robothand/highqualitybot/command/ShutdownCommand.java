@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -19,7 +20,7 @@ public class ShutdownCommand extends Command {
     public String getDescription() {
         return "Immediately shuts down the bot. If you don't have the ability to start it up again, you probably " +
                 "shouldn't use this.\n" +
-                "Usage: " + Bot.config.PREFIX + "shutdown";
+                "Usage: " + Config.PREFIX + "shutdown";
     }
 
     @Override

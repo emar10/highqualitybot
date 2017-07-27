@@ -14,16 +14,16 @@ import java.util.Scanner;
  * Reads in properties from a specified configuration file, and provides access to the values.
  */
 public class Config {
-    String TOKEN;
-    public String PREFIX;
-    public String OWNERID;
-    public ArrayList<Command> ALLOWED;
-    public ArrayList<Command> DISALLOWED;
-    public boolean ALLOWEDHASPRECEDENCE;
-    public ArrayList<String> PERMGROUPS;
 
+    public static String TOKEN;
+    public static String PREFIX;
+    public static String OWNERID;
+    public static ArrayList<Command> ALLOWED;
+    public static ArrayList<Command> DISALLOWED;
+    public static boolean ALLOWEDHASPRECEDENCE;
+    public static ArrayList<String> PERMGROUPS;
 
-    public Config(String path) throws FileNotFoundException {
+    public static void loadConfig(String path) throws FileNotFoundException {
         // set default values
         PREFIX = ".";
         ALLOWED = new ArrayList<>();
@@ -76,8 +76,6 @@ public class Config {
                     System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
             }
         }
-
-        // TODO if default perms do not encompass every command, set all to disallowed
 
         // Check for values that would need user input
         if (TOKEN == null) {

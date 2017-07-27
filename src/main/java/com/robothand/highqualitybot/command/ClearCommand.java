@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
@@ -22,7 +23,7 @@ public class ClearCommand extends Command {
     @Override
     public String getDescription() {
         return "Stops the player and wipes out the playlist. Will interrupt any currently playing.\n" +
-                "Usage: " + Bot.config.PREFIX + "clear";
+                "Usage: " + Config.PREFIX + "clear";
     }
 
     @Override
