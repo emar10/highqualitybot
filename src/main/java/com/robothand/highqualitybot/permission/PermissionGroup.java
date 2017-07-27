@@ -41,11 +41,7 @@ public class PermissionGroup {
                     disallowed = PermissionManager.instance().parseCommandList(value);
 
                 case "allowedHasPrecedence":
-                    if (value.equals("true")) {
-                        allowedHasPrecedence = true;
-                    } else if (value.equals("false")) {
-                        allowedHasPrecedence = false;
-                    }
+                    allowedHasPrecedence = Boolean.parseBoolean(value);
                     break;
 
                 case "priority":

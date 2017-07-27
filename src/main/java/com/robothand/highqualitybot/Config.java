@@ -59,11 +59,7 @@ public class Config {
                     break;
 
                 case "allowedHasPrecedence":
-                    if (value.equals("true")) {
-                        ALLOWED_HAS_PRECEDENCE = true;
-                    } else if (value.equals("false")) {
-                        ALLOWED_HAS_PRECEDENCE = false;
-                    }
+                    ALLOWED_HAS_PRECEDENCE = Boolean.parseBoolean(value);
                     break;
 
                 case "permissiongroups":
