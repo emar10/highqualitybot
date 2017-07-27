@@ -63,25 +63,19 @@ public class PermissionGroup {
         }
     }
 
-    public boolean appliesTo(Member member) {
-        for (Role current : member.getRoles()) {
-            if (current == role) {
-                return true;
-            }
-        }
-
-        return false;
+    public boolean appliesTo(Member member, Command command) {
+        return member.getRoles().contains(role) && (allowed.contains(command) || disallowed.contains(command));
     }
 
-    public int hasPermission(Command command) {
-        int permission = 0;
+    public boolean hasPermission(Command command) {
+        boolean permission = false;
 
         if (allowed.contains(command)) {
-            permission = 1;
+            permission = true;
         }
 
-        if (disallowed.contains(command) && (permission == 0 || !allowedHasPrecedence)) {
-            permission = -1;
+        if (disallowed.contains(command) && !allowedHasPrecedence) {
+            permission = false;
         }
 
         return permission;

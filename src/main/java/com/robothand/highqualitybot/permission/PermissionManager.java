@@ -51,35 +51,20 @@ public class PermissionManager {
         boolean permission = false;
 
         // start with default permissions
-        int def = 0;
         if (Config.ALLOWED.contains(command)) {
-            def = 1;
+            permission = true;
         }
 
-        if (Config.DISALLOWED.contains(command) && (def == 0 || !Config.ALLOWED_HAS_PRECEDENCE)) {
-            def = -1;
-        }
-
-        switch (def) {
-            case -1:
-
+        if (Config.DISALLOWED.contains(command) && !Config.ALLOWED_HAS_PRECEDENCE) {
+            permission = false;
         }
 
         // check PermissionGroups
         int priority = 0;
         for (PermissionGroup group : groups) {
-            if (group.appliesTo(member) && group.getPriority() > priority) {
+            if (group.appliesTo(member, command) && group.getPriority() > priority) {
                 priority = group.getPriority();
-                switch (group.hasPermission(command)) {
-                    case -1:
-                        permission = false;
-                        break;
-                    case 0:
-                        break;
-                    case 1:
-                        permission = true;
-                        break;
-                }
+                permission = group.hasPermission(command);
             }
         }
 
