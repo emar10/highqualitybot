@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.permission;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.command.Command;
 import com.robothand.highqualitybot.command.Commands;
@@ -57,7 +56,7 @@ public class PermissionManager {
             def = 1;
         }
 
-        if (Config.DISALLOWED.contains(command) && (def == 0 || !Config.ALLOWEDHASPRECEDENCE)) {
+        if (Config.DISALLOWED.contains(command) && (def == 0 || !Config.ALLOWED_HAS_PRECEDENCE)) {
             def = -1;
         }
 

@@ -20,7 +20,7 @@ public class Config {
     public static String OWNERID;
     public static ArrayList<Command> ALLOWED;
     public static ArrayList<Command> DISALLOWED;
-    public static boolean ALLOWEDHASPRECEDENCE;
+    public static boolean ALLOWED_HAS_PRECEDENCE;
     public static ArrayList<String> PERMGROUPS;
 
     public static void loadConfig(String path) throws FileNotFoundException {
@@ -28,7 +28,7 @@ public class Config {
         PREFIX = ".";
         ALLOWED = new ArrayList<>();
         DISALLOWED = new ArrayList<>();
-        ALLOWEDHASPRECEDENCE = true;
+        ALLOWED_HAS_PRECEDENCE = true;
         PERMGROUPS = new ArrayList<>();
 
         // read config.cfg
@@ -60,9 +60,9 @@ public class Config {
 
                 case "allowedHasPrecedence":
                     if (value.equals("true")) {
-                        ALLOWEDHASPRECEDENCE = true;
+                        ALLOWED_HAS_PRECEDENCE = true;
                     } else if (value.equals("false")) {
-                        ALLOWEDHASPRECEDENCE = false;
+                        ALLOWED_HAS_PRECEDENCE = false;
                     }
                     break;
 
