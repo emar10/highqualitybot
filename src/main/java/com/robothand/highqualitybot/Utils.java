@@ -28,9 +28,7 @@ public class Utils {
             key = split[0].trim();
             value = split[1].trim();
 
-            if (properties.replace(key, value) == null) {
-                properties.put(key, value);
-            }
+            properties.put(key, value);
         }
 
         return properties;
