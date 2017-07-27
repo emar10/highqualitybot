@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -18,7 +19,7 @@ public class PauseCommand extends Command {
     @Override
     public String getDescription() {
         return "Pauses playback until resumed with the play command. Does nothing if the player is already paused.\n" +
-                "Usage: " + Bot.config.PREFIX + "pause";
+                "Usage: " + Config.PREFIX + "pause";
     }
 
     @Override
