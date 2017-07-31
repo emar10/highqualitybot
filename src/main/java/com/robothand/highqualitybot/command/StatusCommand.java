@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -16,7 +17,7 @@ public class StatusCommand extends Command {
     @Override
     public String getDescription() {
         return "Prints the current running version of High Quality Bot.\n" +
-                "Usage: " + Bot.PREFIX + "status";
+                "Usage: " + Config.PREFIX + "status";
     }
 
     @Override

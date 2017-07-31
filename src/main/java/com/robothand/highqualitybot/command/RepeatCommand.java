@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.robothand.highqualitybot.music.TrackScheduler;
 import net.dv8tion.jda.core.entities.Guild;
@@ -20,7 +21,7 @@ public class RepeatCommand extends Command {
     public String getDescription() {
         return "With no arguments, shows the repeat mode. OFF disables repeating, SINGLE will repeat the current song" +
                 "until manually skipped, and ALL will repeat the entire playlist indefinitely.\n" +
-                "Usage: " + Bot.PREFIX + "repeat [off, single all]";
+                "Usage: " + Config.PREFIX + "repeat [off, single all]";
     }
 
     @Override
@@ -51,7 +52,7 @@ public class RepeatCommand extends Command {
 //                    break;
 //            }
 
-            message = message.concat("\nUse " + Bot.PREFIX + "repeat <off, single, all> to set.");
+            message = message.concat("\nUse " + Config.PREFIX + "repeat <off, single, all> to set.");
 
             channel.sendMessage(message).queue();
 

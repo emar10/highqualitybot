@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -18,7 +19,7 @@ public class SkipCommand extends Command {
     @Override
     public String getDescription() {
         return "Skips to the next song in the queue. If there are no other songs, simply stops playback.\n" +
-                "Usage: " + Bot.PREFIX + "skip";
+                "Usage: " + Config.PREFIX + "skip";
     }
 
     @Override

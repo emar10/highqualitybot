@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
@@ -19,7 +20,7 @@ public class NowPlayingCommand extends Command {
     @Override
     public String getDescription() {
         return "Lists info on the song currently playing.\n" +
-                "Usage: " + Bot.PREFIX + "nowplaying";
+                "Usage: " + Config.PREFIX + "nowplaying";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -18,7 +19,7 @@ public class PingCommand extends Command {
     @Override
     public String getDescription() {
         return "Used to test that the bot is working. Though if you're reading this, it's probably working.\n" +
-                "Usage: " + Bot.PREFIX + "ping";
+                "Usage: " + Config.PREFIX + "ping";
     }
 
     @Override

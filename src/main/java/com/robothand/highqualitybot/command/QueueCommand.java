@@ -1,6 +1,7 @@
 package com.robothand.highqualitybot.command;
 
 import com.robothand.highqualitybot.Bot;
+import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
@@ -21,7 +22,7 @@ public class QueueCommand extends Command {
     @Override
     public String getDescription() {
         return "Prints out a list of all songs currently in the music queue.\n" +
-                "Usage: " + Bot.PREFIX + "list";
+                "Usage: " + Config.PREFIX + "list";
     }
 
     @Override
