@@ -3,9 +3,11 @@ package com.robothand.highqualitybot;
 import com.robothand.highqualitybot.command.*;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.robothand.highqualitybot.permission.PermissionManager;
+import com.robothand.highqualitybot.util.SimpleLogWrapper;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.utils.SimpleLog;
 
 import java.io.FileNotFoundException;
 
@@ -17,6 +19,9 @@ public class Bot {
     public static final String VERSION = "0.2";
 
     public static void main(String[] args) {
+        // mute JDA's logging and plug in our wrapper
+        SimpleLog.LEVEL = SimpleLog.Level.OFF;
+        SimpleLog.addListener(new SimpleLogWrapper());
 
         // prepare the audio sources
         GuildMusicPlayer.setupSources();
