@@ -8,25 +8,35 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.utils.SimpleLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 
 /**
- * main class
+ * Bot.java
+ * Main class, drives all the fun
  */
 public class Bot {
     private static JDA api;
+    private static String CONFIGNAME = "config.cfg";
     public static final String VERSION = "0.2";
 
     public static void main(String[] args) {
+        // get logger
+        Logger log = LoggerFactory.getLogger(Bot.class);
+        log.info("High Quality Bot v{}", VERSION);
+
         // mute JDA's logging and plug in our wrapper
         SimpleLog.LEVEL = SimpleLog.Level.OFF;
         SimpleLog.addListener(new SimpleLogWrapper());
 
         // prepare the audio sources
+        log.info("Setting up audio sources...");
         GuildMusicPlayer.setupSources();
 
         // commands
+        log.info("Initializing commands...");
         Commands commands = Commands.getInstance();
 
         // utility commands
@@ -44,31 +54,32 @@ public class Bot {
         commands.addCommand(new QueueCommand());
         commands.addCommand(new ClearCommand());
 
-        System.out.println("Attempting to read \"config.cfg\"");
-
+        // load main configuration
+        log.info("Attempting to read file \"{}\"...", CONFIGNAME);
         try {
-            Config.loadConfig("config.cfg");
-
-
+            Config.loadConfig(CONFIGNAME);
         } catch (FileNotFoundException e) {
-            System.err.println("FATAL: could not find file \"config.cfg\" in " + System.getProperty("user.dir"));
+            log.error("FATAL: could not find file \"{}\" in {}", CONFIGNAME, System.getProperty("user.dir"));
             System.exit(1);
         }
 
-        System.out.println("Connecting to Discord...");
+        log.info("Connecting to Discord...");
         try {
             api = new JDABuilder(AccountType.BOT).setToken(Config.TOKEN).buildBlocking();
         } catch (Exception e) {
-            System.err.println("FATAL: Could not connect to Discord");
-            System.exit(1);
+            log.error("FATAL: Could not connect to Discord");
+            System.exit(2);
         }
 
         // read permissions
+        log.info("Reading permissions...");
         PermissionManager.instance().readGroups();
 
         // setup listeners
+        log.info("Setting up command listeners...");
         commands.setupListeners(api);
 
+        log.info("Finished starting up!");
     }
 
     public static JDA getAPI() {
