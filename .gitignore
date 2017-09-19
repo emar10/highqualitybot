@@ -4,6 +4,7 @@
 
 # intellij
 /.idea/
+/out/
 *.iml
 *.ipr
 *.iws
