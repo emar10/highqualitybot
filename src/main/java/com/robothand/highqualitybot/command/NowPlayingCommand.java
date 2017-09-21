@@ -29,7 +29,7 @@ public class NowPlayingCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         GuildMusicPlayer musicPlayer;
         AudioTrack track;
         Guild guild = event.getGuild();
