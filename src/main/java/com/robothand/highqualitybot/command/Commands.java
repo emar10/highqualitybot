@@ -1,6 +1,10 @@
 package com.robothand.highqualitybot.command;
 
+import com.robothand.highqualitybot.Config;
 import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -8,11 +12,10 @@ import java.util.Hashtable;
 /**
  * Created by ethan on 6/22/17.
  */
-public class Commands {
+public class Commands extends ListenerAdapter {
     private static Commands instance = new Commands();
 
     private final Hashtable<String, Command> commands;
-    private final ArrayList<String[]> aliases;
 
     public static Commands getInstance() {
         return instance;
@@ -20,7 +23,6 @@ public class Commands {
 
     private Commands() {
         commands = new Hashtable<>();
-        aliases = new ArrayList<>();
     }
 
     public void setupListeners(JDA jda) {
@@ -31,12 +33,33 @@ public class Commands {
 
     public void addCommand(Command command) {
         if (command != null) {
-            aliases.add(command.getNames());
-            commands.put(command.getNames()[0], command);
+            for (String current : command.getNames()) {
+                commands.put(current, command);
+            }
         }
     }
 
-    // TODO allow getCommand to find commands using aliases
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        // grab basic info from event
+        Message message = event.getMessage();
+        String content = message.getRawContent();
+
+        // check for command prefix
+        if (content.startsWith(Config.PREFIX)) {
+            // strip it off and split it
+            String[] args = content.replaceFirst(Config.PREFIX, "").split(" ");
+
+            // check for command in aliases
+            for (String current : commands.keySet()) {
+                if (args[0].equals(current)) {
+                    commands.get(current).requestExecute(event, args);
+                    break;
+                }
+            }
+        }
+    }
+
     public Command getCommand(String name) {
         return commands.get(name);
     }

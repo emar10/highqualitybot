@@ -76,8 +76,8 @@ public class Bot {
         PermissionManager.instance().readGroups();
 
         // setup listeners
-        log.info("Setting up command listeners...");
-        commands.setupListeners(api);
+        log.info("Setting up command listener...");
+        api.addEventListener(commands);
 
         log.info("Finished starting up!");
     }

@@ -1,10 +1,8 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.permission.PermissionManager;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -16,31 +14,14 @@ public abstract class Command extends ListenerAdapter {
     public abstract String[] getNames();
     public abstract String getDescription();
     public abstract String getShortDesc();
-    public abstract void onCommand(MessageReceivedEvent event, String[] args);
+    public abstract void execute(MessageReceivedEvent event, String[] args);
 
-    @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        // grab basic info from event
-        Message message = event.getMessage();
-        String content = message.getRawContent();
-
-        // check for command prefix
-        if (content.startsWith(Config.PREFIX)) {
-            // strip it off and split it
-            String[] args = content.replaceFirst(Config.PREFIX, "").split(" ");
-
-            // check with names
-            for (String current : getNames()) {
-                if (args[0].equals(current)) {
-                    // run command if we have permission
-                    if (PermissionManager.instance().hasPermission(event.getMember(), this)) {
-                        onCommand(event, args);
-                    } else {
-                        event.getChannel().sendMessage("You do not have permission to run that command.").queue();
-                    }
-                    break;
-                }
-            }
+    public void requestExecute(MessageReceivedEvent event, String[] args) {
+        // run command if we have permission
+        if (PermissionManager.instance().hasPermission(event.getMember(), this)) {
+            execute(event, args);
+        } else {
+            event.getChannel().sendMessage("You do not have permission to run that command.").queue();
         }
     }
 }

@@ -31,7 +31,7 @@ public class QueueCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         GuildMusicPlayer musicPlayer;
         Guild guild = event.getGuild();
         MessageChannel channel = event.getChannel();
