@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
@@ -8,7 +7,8 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/19/17.
+ * PauseCommand.java
+ * Pauses the music player in the current Guild.
  */
 public class PauseCommand extends Command {
     @Override
@@ -38,7 +38,7 @@ public class PauseCommand extends Command {
         if (musicPlayer.isPaused()) {
             channel.sendMessage("The player is already paused!").queue();
         } else {
-            if (musicPlayer.getPlayingTrack() == null) {
+            if (musicPlayer.getPlayingTrack() == null) {    // nothing playing
                 channel.sendMessage("There's nothing in the queue to pause!").queue();
             } else {
                 musicPlayer.setPaused(true);
