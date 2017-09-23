@@ -3,11 +3,9 @@ package com.robothand.highqualitybot;
 import com.robothand.highqualitybot.command.*;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.robothand.highqualitybot.permission.PermissionManager;
-import com.robothand.highqualitybot.util.SimpleLogWrapper;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.utils.SimpleLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +24,6 @@ public class Bot {
         // get logger
         Logger log = LoggerFactory.getLogger(Bot.class);
         log.info("High Quality Bot v{}", VERSION);
-
-        // mute JDA's logging and plug in our wrapper
-        SimpleLog.LEVEL = SimpleLog.Level.OFF;
-        SimpleLog.addListener(new SimpleLogWrapper());
 
         // prepare the audio sources
         log.info("Setting up audio sources...");
