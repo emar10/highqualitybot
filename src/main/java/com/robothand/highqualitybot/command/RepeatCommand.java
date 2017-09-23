@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.robothand.highqualitybot.music.TrackScheduler;
@@ -9,7 +8,8 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/19/17.
+ * RepeatCommand.java
+ * Sets repeat mode for the current Guild's audio player
  */
 public class RepeatCommand extends Command {
     @Override
@@ -21,7 +21,7 @@ public class RepeatCommand extends Command {
     public String getDescription() {
         return "With no arguments, shows the repeat mode. OFF disables repeating, SINGLE will repeat the current song" +
                 "until manually skipped, and ALL will repeat the entire playlist indefinitely.\n" +
-                "Usage: " + Config.PREFIX + "repeat [off, single all]";
+                "Usage: " + Config.PREFIX + "repeat [off, single, all]";
     }
 
     @Override
@@ -38,26 +38,15 @@ public class RepeatCommand extends Command {
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
 
         if (args.length == 1) {
-            String message = "Current repeat mode is: " + musicPlayer.getRepeat();
+            StringBuilder message = new StringBuilder();
 
-//            switch (musicPlayer.getRepeat()) {
-//                case OFF:
-//                    message.concat("OFF");
-//                    break;
-//                case SINGLE:
-//                    message.concat("SINGLE");
-//                    break;
-//                case ALL:
-//                    message.concat("ALL");
-//                    break;
-//            }
+            message.append("Current repeat mode is: ").append(musicPlayer.getRepeat());
+            message = message.append("\nUse ").append(Config.PREFIX).append("repeat <off, single, all> to set.");
 
-            message = message.concat("\nUse " + Config.PREFIX + "repeat <off, single, all> to set.");
-
-            channel.sendMessage(message).queue();
+            channel.sendMessage(message.toString()).queue();
 
         } else {
-            switch (args[1]) {
+            switch (args[1].toLowerCase()) {
                 case "off":
                     musicPlayer.setRepeat(TrackScheduler.Repeat.OFF);
                     break;
@@ -69,6 +58,7 @@ public class RepeatCommand extends Command {
                     break;
             }
 
+            log.debug("{}: setting repeat mode to {}", guild.getName(), musicPlayer.getRepeat());
             channel.sendMessage("Repeat mode set to " + musicPlayer.getRepeat()).queue();
         }
     }

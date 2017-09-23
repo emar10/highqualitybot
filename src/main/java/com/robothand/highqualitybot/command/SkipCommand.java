@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
@@ -8,12 +7,13 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/19/17.
+ * SkipCommand.java
+ * Skips the currently playing song. Stops playback if there is nothing left in the queue.
  */
 public class SkipCommand extends Command {
     @Override
     public String[] getNames() {
-        return new String[] {"skip"};
+        return new String[] {"skip, next"};
     }
 
     @Override
@@ -35,7 +35,12 @@ public class SkipCommand extends Command {
 
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
 
-        musicPlayer.skipTrack();
-        channel.sendMessage("Skipping to next track...").queue();
+        if (musicPlayer.getPlayingTrack() == null) {
+            log.debug("{}: No currently playing track, doing nothing", guild.getName());
+            channel.sendMessage("There isn't anything playing to skip!").queue();
+        } else {
+            musicPlayer.skipTrack();
+            channel.sendMessage("Skipping to next track...").queue();
+        }
     }
 }
