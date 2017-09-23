@@ -31,7 +31,7 @@ public class PlayCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         Guild guild = event.getGuild();
         MessageChannel channel = event.getChannel();
 

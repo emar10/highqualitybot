@@ -29,7 +29,7 @@ public class ShutdownCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         MessageChannel channel = event.getChannel();
 
         channel.sendMessage("Going down!").complete();
