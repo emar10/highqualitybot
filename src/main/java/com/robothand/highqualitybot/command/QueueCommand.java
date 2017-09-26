@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -11,7 +10,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.Queue;
 
 /**
- * Created by ethan on 6/19/17.
+ * QueueCommand.java
+ * Lists up to 10 songs in the player's queue, as well as the total number of tracks.
  */
 public class QueueCommand extends Command {
     @Override
@@ -41,13 +41,15 @@ public class QueueCommand extends Command {
         Queue<AudioTrack> queue = musicPlayer.getQueue();
 
         if (queue.isEmpty()) {
+            log.debug("{}: queue is empty, doing nothing", guild.getName());
             message.append("The queue is empty!");
         } else {
+            message.append("Now Playing: **").append(musicPlayer.getPlayingTrack().getInfo().title).append("**\n");
             message.append("Current Queue (").append(queue.size()).append(" tracks):\n");
             int currentTrack = 1;
 
             for (AudioTrack track : queue) {
-                message.append(currentTrack + ". " + track.getInfo().title + "\n");
+                message.append(currentTrack).append(". ").append(track.getInfo().title).append("\n");
 
                 if (currentTrack++ > 10) {
                     break;

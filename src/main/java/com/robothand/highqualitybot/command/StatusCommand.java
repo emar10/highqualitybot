@@ -6,7 +6,8 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/30/17.
+ * StatusCommand.java
+ * Displays information on the running instance of High Quality Bot.
  */
 public class StatusCommand extends Command {
     @Override
