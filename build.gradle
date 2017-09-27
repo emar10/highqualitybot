@@ -11,7 +11,7 @@ apply plugin: 'java'
 
 mainClassName = 'com.robothand.highqualitybot.Bot'
 
-def jdaVersion = '3.1.1_212'
+def jdaVersion = '3.3.1_276'
 
 sourceCompatibility = 1.8
 
