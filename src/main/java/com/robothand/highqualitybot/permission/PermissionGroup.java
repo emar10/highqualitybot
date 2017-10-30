@@ -5,15 +5,20 @@ import com.robothand.highqualitybot.Utils;
 import com.robothand.highqualitybot.command.Command;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
+ * PermissionGroup.java
+ *
  * Represents a set of permissions for a group of Users
  */
 public class PermissionGroup {
+    Logger log = LoggerFactory.getLogger(this.getClass());
     private ArrayList<Command> allowed;
     private ArrayList<Command> disallowed;
     private boolean allowedHasPrecedence;
@@ -27,6 +32,7 @@ public class PermissionGroup {
         allowedHasPrecedence = true;
         priority = 0;
 
+        log.debug("Reading PermissionGroup config from \'{}\'...", filename);
         Hashtable<String,String> table = Utils.readCFG(filename);
 
         for (String key : table.keySet()) {
@@ -52,13 +58,14 @@ public class PermissionGroup {
                     role = Bot.getAPI().getRoleById(value);
 
                     if (role == null) {
-                        System.out.println("ERROR: " + filename + ": invalid Role ID");
+                        log.error("in \'{}\': invalid Role ID", filename);
                     }
 
                     break;
 
                 default:
-                    System.out.println("WARN: " + filename + ": Unknown property \"" + key + "\"");
+                    log.info("in \'{}\': unknown property \'{}\', ignoring...", filename, key);
+                    break;
             }
         }
     }
@@ -84,5 +91,4 @@ public class PermissionGroup {
     public int getPriority() {
         return priority;
     }
-
 }

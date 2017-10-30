@@ -4,14 +4,19 @@ import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.command.Command;
 import com.robothand.highqualitybot.command.Commands;
 import net.dv8tion.jda.core.entities.Member;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
+ * PermissionManager.java
+ *
  * Handles PermissionGroups, and provides methods for checking a user's permissions on a certain action.
  */
 public class PermissionManager {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
     private static final PermissionManager instance = new PermissionManager();
     private ArrayList<PermissionGroup> groups;
 
@@ -76,7 +81,7 @@ public class PermissionManager {
             try {
                 groups.add(new PermissionGroup(filename));
             } catch (FileNotFoundException e) {
-                System.err.println("ERROR: could not find file " + filename);
+                log.error("Could not find PermissionGroup config file \'{}\'", filename);
             }
         }
     }
