@@ -4,14 +4,20 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Created by ethan on 6/19/17.
+ * TrackScheduler.java
+ *
+ * Maintains a list of songs to be played.
  */
 public class TrackScheduler extends AudioEventAdapter {
+    Logger log = LoggerFactory.getLogger(this.getClass());
+
     public enum Repeat {
         OFF, SINGLE, ALL
     }
@@ -47,15 +53,19 @@ public class TrackScheduler extends AudioEventAdapter {
 
     public void nextTrack(boolean forceNext) {
         if (repeating == Repeat.OFF || forceNext) {
+            log.debug("Playing next track in queue...");
             player.startTrack(queue.poll(), false);
         } else if (repeating == Repeat.SINGLE) {
+            log.debug("Repeating single track...");
             player.startTrack(player.getPlayingTrack().makeClone(), false);
         } else if (repeating == Repeat.ALL) {
+            log.debug("Playing next track and adding previous to the queue...");
             queue.add(player.getPlayingTrack().makeClone());
             player.startTrack(queue.poll(), false);
         }
 
         if (player.getPlayingTrack() == null) {
+            log.debug("Queue is empty, leaving AudioChannel...");
             player.setPaused(true);
             guildPlayer.leaveChannel();
         }
