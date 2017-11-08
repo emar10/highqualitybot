@@ -25,6 +25,15 @@ public class Bot {
         Logger log = LoggerFactory.getLogger(Bot.class);
         log.info("High Quality Bot v{}", VERSION);
 
+        // load main configuration
+        log.info("Attempting to read file \"{}\"...", CONFIGNAME);
+        try {
+            Config.loadConfig(CONFIGNAME);
+        } catch (FileNotFoundException e) {
+            log.error("FATAL: could not find file \"{}\" in {}", CONFIGNAME, System.getProperty("user.dir"));
+            System.exit(1);
+        }
+
         // prepare the audio sources
         log.info("Setting up audio sources...");
         GuildMusicPlayer.setupSources();
@@ -38,6 +47,7 @@ public class Bot {
         commands.addCommand(new StatusCommand());
         commands.addCommand(new ShutdownCommand());
         commands.addCommand(new PingCommand());
+        commands.addCommand(new LogCommand());
 
         // music
         commands.addCommand(new PlayCommand());
@@ -48,15 +58,7 @@ public class Bot {
         commands.addCommand(new QueueCommand());
         commands.addCommand(new ClearCommand());
 
-        // load main configuration
-        log.info("Attempting to read file \"{}\"...", CONFIGNAME);
-        try {
-            Config.loadConfig(CONFIGNAME);
-        } catch (FileNotFoundException e) {
-            log.error("FATAL: could not find file \"{}\" in {}", CONFIGNAME, System.getProperty("user.dir"));
-            System.exit(1);
-        }
-
+        // open connection to Discord
         log.info("Connecting to Discord...");
         try {
             api = new JDABuilder(AccountType.BOT).setToken(Config.TOKEN).buildBlocking();
