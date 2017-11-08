@@ -6,22 +6,40 @@ import com.robothand.highqualitybot.permission.PermissionManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 
 /**
- * main class
+ * Bot.java
+ * Main class, drives all the fun
  */
 public class Bot {
     private static JDA api;
+    private static String CONFIGNAME = "config.cfg";
     public static final String VERSION = "0.2";
 
     public static void main(String[] args) {
+        // get logger
+        Logger log = LoggerFactory.getLogger(Bot.class);
+        log.info("High Quality Bot v{}", VERSION);
+
+        // load main configuration
+        log.info("Attempting to read file \"{}\"...", CONFIGNAME);
+        try {
+            Config.loadConfig(CONFIGNAME);
+        } catch (FileNotFoundException e) {
+            log.error("FATAL: could not find file \"{}\" in {}", CONFIGNAME, System.getProperty("user.dir"));
+            System.exit(1);
+        }
 
         // prepare the audio sources
+        log.info("Setting up audio sources...");
         GuildMusicPlayer.setupSources();
 
         // commands
+        log.info("Initializing commands...");
         Commands commands = Commands.getInstance();
 
         // utility commands
@@ -29,6 +47,7 @@ public class Bot {
         commands.addCommand(new StatusCommand());
         commands.addCommand(new ShutdownCommand());
         commands.addCommand(new PingCommand());
+        commands.addCommand(new LogCommand());
 
         // music
         commands.addCommand(new PlayCommand());
@@ -39,31 +58,24 @@ public class Bot {
         commands.addCommand(new QueueCommand());
         commands.addCommand(new ClearCommand());
 
-        System.out.println("Attempting to read \"config.cfg\"");
-
-        try {
-            Config.loadConfig("config.cfg");
-
-
-        } catch (FileNotFoundException e) {
-            System.err.println("FATAL: could not find file \"config.cfg\" in " + System.getProperty("user.dir"));
-            System.exit(1);
-        }
-
-        System.out.println("Connecting to Discord...");
+        // open connection to Discord
+        log.info("Connecting to Discord...");
         try {
             api = new JDABuilder(AccountType.BOT).setToken(Config.TOKEN).buildBlocking();
         } catch (Exception e) {
-            System.err.println("FATAL: Could not connect to Discord");
-            System.exit(1);
+            log.error("FATAL: Could not connect to Discord");
+            System.exit(2);
         }
 
         // read permissions
+        log.info("Reading permissions...");
         PermissionManager.instance().readGroups();
 
         // setup listeners
-        commands.setupListeners(api);
+        log.info("Setting up command listener...");
+        api.addEventListener(commands);
 
+        log.info("Finished starting up!");
     }
 
     public static JDA getAPI() {

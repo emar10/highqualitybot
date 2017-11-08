@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -9,7 +8,8 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/19/17.
+ * NowPlayingCommand.java
+ * Prints detailed information on the current song.
  */
 public class NowPlayingCommand extends Command {
     @Override
@@ -29,7 +29,7 @@ public class NowPlayingCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         GuildMusicPlayer musicPlayer;
         AudioTrack track;
         Guild guild = event.getGuild();
@@ -40,6 +40,7 @@ public class NowPlayingCommand extends Command {
         track = musicPlayer.getPlayingTrack();
 
         if (track == null) {
+            log.debug("No track currently playing, doing nothing");
             message.append("Nothing is playing right now.");
         } else {
             message.append("Playing right now: ").append(track.getInfo().title);
