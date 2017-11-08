@@ -2,6 +2,8 @@ package com.robothand.highqualitybot;
 
 import com.robothand.highqualitybot.command.Command;
 import com.robothand.highqualitybot.permission.PermissionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Scanner;
  * Reads in properties from a specified configuration file, and provides access to the values.
  */
 public class Config {
-
+    private static Logger log = LoggerFactory.getLogger(Config.class);
     public static String TOKEN;
     public static String PREFIX;
     public static String OWNERID;
@@ -68,8 +70,13 @@ public class Config {
                     }
                     break;
 
+                case "logLevel":
+                    ch.qos.logback.classic.Logger root =
+                            (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+                    root.setLevel(ch.qos.logback.classic.Level.toLevel(value, ch.qos.logback.classic.Level.INFO));
+
                 default:
-                    System.out.println("Info: Unknown property \"" + key + "\", ignoring.");
+                    log.info("{}: unknown property \'{}\', ignoring.");
             }
         }
 
@@ -77,11 +84,12 @@ public class Config {
         if (TOKEN == null) {
             Scanner c = new Scanner(System.in);
 
-            System.out.println("Warning: OAuth token not set in config. Please enter your token below:");
+            log.error("OAuth token not present in config. Querying stdin...");
+            System.out.println("Please enter your token below:");
             System.out.print("> ");
             TOKEN = c.nextLine();
 
-            System.out.println("Token set. Recommend setting in config file for future runs.");
+            log.error("Token set. Providing in config for future runs is highly recommended.");
         }
     }
 }
