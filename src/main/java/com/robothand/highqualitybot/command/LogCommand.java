@@ -27,11 +27,10 @@ public class LogCommand extends Command {
     @Override
     public void execute(MessageReceivedEvent event, String[] args) {
         MessageChannel channel = event.getChannel();
-        String message;
         ch.qos.logback.classic.Logger root =
                 (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 
-        if (args.length > 2) {
+        if (args.length > 1) {
             root.setLevel(ch.qos.logback.classic.Level.toLevel(args[1], root.getLevel()));
         }
 
