@@ -2,16 +2,9 @@
 /build/
 /.gradle/
 
-# intellij
-/.idea/
-/out/
-*.iml
-*.ipr
-*.iws
-
-# macos
-.DS_Store
-
 # config file
-config.txt
-config.cfg
+*.cfg
+
+# keep example configurations
+!exampleconfig.cfg
+!examplegroup.cfg
