@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.permission;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Utils;
 import com.robothand.highqualitybot.command.Command;
 import net.dv8tion.jda.core.entities.Member;
@@ -23,7 +22,7 @@ public class PermissionGroup {
     private ArrayList<Command> disallowed;
     private boolean allowedHasPrecedence;
     private int priority;
-    private Role role;
+    private String role;
 
     public PermissionGroup(String filename) throws FileNotFoundException {
         // default values
@@ -54,13 +53,8 @@ public class PermissionGroup {
                     priority = Integer.parseInt(value);
                     break;
 
-                case "role":
-                    role = Bot.getAPI().getRoleById(value);
-
-                    if (role == null) {
-                        log.error("in \'{}\': invalid Role ID", filename);
-                    }
-
+                case "roleName":
+                    role = value;
                     break;
 
                 default:
@@ -71,7 +65,23 @@ public class PermissionGroup {
     }
 
     public boolean appliesTo(Member member, Command command) {
-        return member.getRoles().contains(role) && (allowed.contains(command) || disallowed.contains(command));
+        // check if this role applies to given command first
+        if (!(allowed.contains(command) || disallowed.contains(command))) {
+            return false;
+        }
+
+        boolean flag = false;
+
+        // check by role name
+        if (role != null) {
+            for (Role r : member.getGuild().getRolesByName(role, true)) {
+                if (member.getRoles().contains(r)) {
+                    flag = true;
+                }
+            }
+        }
+
+        return flag;
     }
 
     public boolean hasPermission(Command command) {
