@@ -1,18 +1,15 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import com.robothand.highqualitybot.music.TrackScheduler;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import java.util.Queue;
-
 /**
- * Created by ethan on 6/27/17.
+ * ClearCommand.java
+ * Command to stop the music player in the current Guild and clear the queue.
  */
 public class ClearCommand extends Command {
 
@@ -33,7 +30,7 @@ public class ClearCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         GuildMusicPlayer musicPlayer;
         Guild guild = event.getGuild();
         MessageChannel channel = event.getChannel();
@@ -41,9 +38,12 @@ public class ClearCommand extends Command {
 
         musicPlayer = GuildMusicPlayer.getPlayer(guild);
 
+        // first check to see if the player is already stopped, otherwise empty queue
         if (musicPlayer.getPlayingTrack() == null) {
+            log.debug("No playing track, taking no action");
             message = "The player is already stopped!";
         } else {
+            log.debug("Clearing player queue...");
             musicPlayer.getQueue().clear();
             musicPlayer.setRepeat(TrackScheduler.Repeat.OFF);
             musicPlayer.skipTrack();

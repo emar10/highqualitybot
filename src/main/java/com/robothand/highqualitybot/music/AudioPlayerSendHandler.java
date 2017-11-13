@@ -5,7 +5,9 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 
 /**
- * Created by ethan on 6/16/17.
+ * AudioPlayerSendHandler.java
+ *
+ * Wrapper that links LavaPlayer's audio streams to JDA.
  */
 public class AudioPlayerSendHandler implements AudioSendHandler {
     private final AudioPlayer audioPlayer;

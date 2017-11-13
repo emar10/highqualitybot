@@ -53,6 +53,7 @@ Currently available options to set are:
 * `permissiongroups` - A list of filenames separated by commas from which HQBot will read permission groups.
 At the bare minimum you should set the token and ownerid. *If the owner ID is not set, you will not be able to run any
 commands.* For more information about the Permissions system, see below.
+* `logLevel` - Set the system-wide logging level. Options from most verbose to least are: `TRACE`, `DEBUG`, `INFO` (default), `WARN`, and `ERROR`.
 
 Example `config.cfg`:
 
@@ -91,8 +92,8 @@ Example Permission Group `DJ.cfg`
 ```
 # Lines starting with '#' are ignored
 
-# RoleID
-role=123456789
+# Role Name
+role=DJ
 
 # Allowed
 allowed=play,pause,skip,queue

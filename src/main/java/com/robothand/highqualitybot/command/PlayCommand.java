@@ -1,6 +1,5 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import com.robothand.highqualitybot.music.GuildMusicPlayer;
 import net.dv8tion.jda.core.entities.Guild;
@@ -9,7 +8,8 @@ import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/19/17.
+ * PlayCommand.java
+ * Resumes the player, or adds a new song to the queue.
  */
 public class PlayCommand extends Command {
 
@@ -31,7 +31,7 @@ public class PlayCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         Guild guild = event.getGuild();
         MessageChannel channel = event.getChannel();
 
@@ -52,18 +52,23 @@ public class PlayCommand extends Command {
                 search = search.concat(args[i]);
             }
 
+            log.debug("{}: Trying to load track with search \"{}\"...", guild.getName(), search);
             musicPlayer.playTrack(search, channel);
         } else { // Resume the paused track
             if (musicPlayer.isPaused()) {
                 musicPlayer.setPaused(false);
+                log.debug("{}: resuming playback...", guild.getName());
                 channel.sendMessage("Player resumed.").queue();
             } else {
+                log.debug("{}: player already running, doing nothing", guild.getName());
                 channel.sendMessage("The player is already running!").queue();
             }
         }
     }
 
+    // Attempts to automatically join a voice channel based on the user who ran the command
     private void joinVoiceChannel(Guild guild, GuildMusicPlayer musicPlayer, MessageReceivedEvent event) {
+        // Do nothing if we're already in a channel
         if (musicPlayer.isInChannel()) {
             return;
         }
@@ -71,12 +76,15 @@ public class PlayCommand extends Command {
         VoiceChannel voice;
         if (event.getMember().getVoiceState().inVoiceChannel()) {
             // Join sender's channel
+            log.debug("{}: getting voice channel from {}", guild.getName(), event.getAuthor().getName());
             voice = event.getMember().getVoiceState().getChannel();
         } else {
             // Otherwise just join the first channel
+            log.debug("{}: author not in any voice channel, joining first in list", guild.getName());
             voice = guild.getVoiceChannels().get(0);
         }
 
+        log.debug("{}: attempting to join voice channel {}", guild.getName(), voice.getName());
         musicPlayer.joinChannel(voice);
     }
 

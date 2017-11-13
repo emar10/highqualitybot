@@ -1,12 +1,12 @@
 package com.robothand.highqualitybot.command;
 
-import com.robothand.highqualitybot.Bot;
 import com.robothand.highqualitybot.Config;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/18/17.
+ * PingCommand.java
+ * Mostly a test to make sure that the bot is working
  */
 public class PingCommand extends Command {
 
@@ -28,7 +28,7 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         MessageChannel channel = event.getChannel();
 
         channel.sendMessage("Pong!").queue();

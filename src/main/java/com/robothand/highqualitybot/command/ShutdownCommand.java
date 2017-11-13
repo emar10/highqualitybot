@@ -6,7 +6,8 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * Created by ethan on 6/18/17.
+ * ShutdownCommand.java
+ * Attempts to cleanly shut down the bot and terminate the program.
  */
 public class ShutdownCommand extends Command {
 
@@ -29,10 +30,11 @@ public class ShutdownCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
         MessageChannel channel = event.getChannel();
 
-        channel.sendMessage("Going down!").complete();
+        log.info("Shutdown command received from {}, bot is going down!", event.getAuthor().getName());
+        channel.sendMessage("Shutdown command acknowledged. Going down!").complete();
         Bot.getAPI().shutdown();
     }
 }

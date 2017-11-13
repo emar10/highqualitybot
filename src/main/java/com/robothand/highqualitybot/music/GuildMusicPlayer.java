@@ -13,15 +13,20 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Hashtable;
 import java.util.Queue;
 
 /**
- * Created by ethan on 6/18/17.
+ * GuildMusicPlayer.java
+ *
+ * Represents the bot's interactions with voice channels. Handles all music
+ * related requests from Commands.
  */
 public class GuildMusicPlayer {
-
+    private Logger log = LoggerFactory.getLogger(this.getClass());
     private static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private static final Hashtable<String, GuildMusicPlayer> guilds = new Hashtable<>();
     private final AudioPlayer player;
@@ -30,8 +35,14 @@ public class GuildMusicPlayer {
     private final Guild guild;
 
     public static void setupSources() {
+        Logger log = LoggerFactory.getLogger(GuildMusicPlayer.class);
+
+        log.info("Setting up audio sources...");
+        log.debug("YouTube...");
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
+        log.debug("SoundCloud...");
         playerManager.registerSourceManager(new SoundCloudAudioSourceManager());
+        log.debug("Local...");
         playerManager.registerSourceManager(new LocalAudioSourceManager());
     }
 
@@ -40,9 +51,13 @@ public class GuildMusicPlayer {
     }
 
     public static GuildMusicPlayer getPlayer(Guild guild) {
+        // get static logger
+        Logger log = LoggerFactory.getLogger(GuildMusicPlayer.class);
+
         // check to see if a player already exists
         GuildMusicPlayer musicPlayer = guilds.get(guild.getId());
         if (musicPlayer == null) {
+            log.info("{}: Music Player does not exist for this guild. Creating...", guild.getName());
             musicPlayer = new GuildMusicPlayer(guild);
         }
 
@@ -61,11 +76,14 @@ public class GuildMusicPlayer {
     }
 
     public void joinChannel(VoiceChannel channel) {
+        log.debug("{}: joining VoiceChannel \'{}\'...", guild.getName(), channel.getName());
         guild.getAudioManager().setSendingHandler(handler);
         guild.getAudioManager().openAudioConnection(channel);
     }
 
     public void leaveChannel() {
+        log.debug("{}: leaving VoiceChannel \'{}\'...", guild.getName(),
+                guild.getAudioManager().getConnectedChannel().getName());
         guild.getAudioManager().setSendingHandler(null);
         guild.getAudioManager().closeAudioConnection();
     }
@@ -118,6 +136,7 @@ public class GuildMusicPlayer {
                 scheduler.add(track);
 
                 if (channel != null) {
+                    log.debug("{}: adding track {} to queue", guild.getName(), track.getInfo().title);
                     String message = "Added \"" + track.getInfo().title + "\" to the queue.";
                     channel.sendMessage(message).queue();
                 }
@@ -129,12 +148,11 @@ public class GuildMusicPlayer {
                 AudioTrack selected = playlist.getSelectedTrack();
 
                 if (selected != null) {
-                    scheduler.add(selected);
-                    messageBuilder.append("\"")
-                            .append(selected.getInfo().title)
-                            .append("\"");
+                    trackLoaded(selected);
+                    return;
                 } else {
                     // Add the entire playlist
+                    log.debug("{}: adding playlist \'{}\' to the queue", guild.getName(), playlist.getName());
                     for (AudioTrack track : playlist.getTracks()) {
                         scheduler.add(track);
                     }
@@ -153,6 +171,7 @@ public class GuildMusicPlayer {
 
             @Override
             public void noMatches() {
+                log.debug("{}: no matches for query \'{}\'", guild.getName(), search);
                 if (channel != null) {
                     String message = "Could not find any matches for \"" + search + "\"";
                     channel.sendMessage(message).queue();
@@ -161,6 +180,7 @@ public class GuildMusicPlayer {
 
             @Override
             public void loadFailed(FriendlyException exception) {
+                log.error("{}: exception trying to load track", guild.getName());
                 if (channel != null) {
                     channel.sendMessage("Could not play").queue();
                 }
