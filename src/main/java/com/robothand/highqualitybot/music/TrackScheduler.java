@@ -67,7 +67,7 @@ public class TrackScheduler extends AudioEventAdapter {
         if (player.getPlayingTrack() == null) {
             log.debug("Queue is empty, leaving AudioChannel...");
             player.setPaused(true);
-            guildPlayer.leaveChannel();
+            new Thread(guildPlayer::leaveChannel).start();
         }
     }
 
