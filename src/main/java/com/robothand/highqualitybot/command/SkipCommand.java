@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SkipCommand extends Command {
     @Override
     public String[] getNames() {
-        return new String[] {"skip, next"};
+        return new String[] {"skip", "next"};
     }
 
     @Override
