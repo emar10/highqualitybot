@@ -39,8 +39,21 @@ public class SkipCommand extends Command {
             log.debug("{}: No currently playing track, doing nothing", guild.getName());
             channel.sendMessage("There isn't anything playing to skip!").queue();
         } else {
+            StringBuilder message = new StringBuilder();
+
+            // skip the track
+            message.append("Skipping to next track...");
+            log.debug("{}: Skipping track...", guild.getName());
             musicPlayer.skipTrack();
-            channel.sendMessage("Skipping to next track...").queue();
+
+            // output next track's name, if applicable
+            if (musicPlayer.getPlayingTrack() == null) {
+                message.append("\nReached end of playlist!");
+            } else {
+                message.append("\n**").append(musicPlayer.getPlayingTrack().getInfo().title).append("** is up next!");
+            }
+
+            channel.sendMessage(message.toString()).queue();
         }
     }
 }
