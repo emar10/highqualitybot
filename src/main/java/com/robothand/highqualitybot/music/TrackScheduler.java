@@ -52,18 +52,24 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void nextTrack(boolean forceNext) {
-        if (repeating == Repeat.OFF || forceNext) {
+        // if we're interrupting a song we should properly prepare prevTrack
+        if (forceNext) {
+            prevTrack = guildPlayer.getPlayingTrack();
+        }
+
+        if (repeating == Repeat.OFF) {
             log.debug("Playing next track in queue...");
             player.startTrack(queue.poll(), false);
-        } else if (repeating == Repeat.SINGLE) {
+        } else if (repeating == Repeat.SINGLE && !forceNext) {
             log.debug("Repeating single track...");
-            player.startTrack(player.getPlayingTrack().makeClone(), false);
+            player.startTrack(prevTrack.makeClone(), false);
         } else if (repeating == Repeat.ALL) {
             log.debug("Playing next track and adding previous to the queue...");
-            queue.add(player.getPlayingTrack().makeClone());
+            queue.add(prevTrack.makeClone());
             player.startTrack(queue.poll(), false);
         }
 
+        // leave the channel if we're out of stuff to play
         if (player.getPlayingTrack() == null) {
             log.debug("Queue is empty, leaving AudioChannel...");
             player.setPaused(true);

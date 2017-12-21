@@ -105,7 +105,7 @@ public class GuildMusicPlayer {
     }
 
     public void skipTrack() {
-        scheduler.nextTrack();
+        scheduler.nextTrack(true);
     }
 
     public TrackScheduler.Repeat getRepeat() {
