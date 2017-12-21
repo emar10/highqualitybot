@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * HelpCommand.java
@@ -47,17 +48,17 @@ public class HelpCommand extends Command {
 
     // Creates a formatted list of all commands
     private String genCommandList() {
-        ArrayList<Command> commands = Commands.getInstance().getCommands();
+        Hashtable<String, Command> commands = Commands.getInstance().getCommands();
 
         StringBuilder message = new StringBuilder();
         message.append("Available commands:\n");
 
-        // iterate over all commands
-        for (Command command : commands) {
-            String[] names = command.getNames();
+        // Iterate over all commands
+        for (String name: commands.keySet()) {
+            Command command = commands.get(name);
             String shortDesc = command.getShortDesc();
 
-            message.append("**").append(names[0]).append("** - ");
+            message.append("**").append(name).append("** - ");
             message.append((shortDesc != null) ? shortDesc : "Short description not available.").append("\n");
         }
 
