@@ -72,7 +72,7 @@ public class Commands extends ListenerAdapter {
     }
 
     // Get the entire Hashtable of Commands
-    public ArrayList<Command> getCommands() {
-        return new ArrayList<>(commands.values());
+    public Hashtable<String, Command> getCommands() {
+        return commands;
     }
 }
