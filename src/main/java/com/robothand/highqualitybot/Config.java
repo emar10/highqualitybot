@@ -74,9 +74,10 @@ public class Config {
                     ch.qos.logback.classic.Logger root =
                             (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
                     root.setLevel(ch.qos.logback.classic.Level.toLevel(value, ch.qos.logback.classic.Level.INFO));
+                    break;
 
                 default:
-                    log.info("{}: unknown property \'{}\', ignoring.");
+                    log.info("{}: unknown property \'{}\', ignoring.", "config.cfg", key);
             }
         }
 
