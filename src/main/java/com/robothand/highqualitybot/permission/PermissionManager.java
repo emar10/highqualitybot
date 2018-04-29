@@ -34,7 +34,7 @@ public class PermissionManager {
 
         for (String name : list.split(",")) {
             if (name.trim().equals("*")) {
-                commands = (ArrayList<Command>)(Commands.getInstance().getCommands().values());
+                commands = new ArrayList(Commands.getInstance().getCommands().values());
                 break;
             }
 

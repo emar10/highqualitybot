@@ -11,7 +11,8 @@ apply plugin: 'java'
 
 mainClassName = 'com.robothand.highqualitybot.Bot'
 
-def jdaVersion = '3.3.1_316'
+def jdaVersion = '3.6.0_360'
+def lavaVersion = '1.2.63'
 
 sourceCompatibility = 1.8
 
@@ -21,10 +22,10 @@ repositories {
 
 dependencies {
     compile "net.dv8tion:JDA:$jdaVersion"
-    compile 'com.sedmelluq:lavaplayer:1.2.49'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'ch.qos.logback:logback-core:1.2.3'
-    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile "com.sedmelluq:lavaplayer:$lavaVersion"
+    compile "ch.qos.logback:logback-classic:1.2.3"
+    compile "ch.qos.logback:logback-core:1.2.3"
+    compile "org.slf4j:slf4j-api:1.7.25"
 }
 
 compileJava.options.encoding = 'UTF-8'

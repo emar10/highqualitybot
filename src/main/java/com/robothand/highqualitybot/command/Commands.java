@@ -44,7 +44,7 @@ public class Commands extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         // grab basic info from event
         Message message = event.getMessage();
-        String content = message.getRawContent();
+        String content = message.getContentRaw();
 
         // check for command prefix
         if (content.startsWith(Config.PREFIX)) {
